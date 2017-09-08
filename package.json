@@ -4,6 +4,7 @@
   "description": "Plugit, A flexible modular Discord bot",
   "main": "index.js",
   "scripts": {
+    "start": "node src/index.js",
     "test": "node tests/discordAuth.js"
   },
   "repository": {

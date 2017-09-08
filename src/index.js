@@ -5,10 +5,10 @@ var config = require('./config');
 var commands = {}; //Create Dictionary to store Commands
 
 var loadCommands = function() {
-    var files = fs.readdirSync("./modules/");
+    var files = fs.readdirSync("../modules/");
     for (let file of files) {
         if (file.endsWith('.js')) {
-          commands[file.slice(0, -3)] = require("./modules/" + file);
+          commands[file.slice(0, -3)] = require("../modules/" + file);
   			  if(config.debug) {
               console.log("Loaded " + file);
           }
