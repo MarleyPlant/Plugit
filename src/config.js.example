@@ -3,5 +3,7 @@ var config = {};
 config.token = 'token';
 config.clientId = 'client-id'
 config.clientSecret = 'client-secret'
+config.playing = 'Currently-Playing-Game'
+config.prefix = 'Command-Prefix'
 
 module.exports = config;
