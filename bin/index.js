@@ -96,11 +96,6 @@ client.on('message', msg => {
       }
       commands[command].main(client, msg);
     }
-    else if ( command in modules) {
-      console.log(command);
-      console.log(modules[command]);
-      modules[command].pkg.main(client, msg);
-    }
   }
 });
 
