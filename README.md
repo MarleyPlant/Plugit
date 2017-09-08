@@ -1,0 +1,2 @@
+# Plugit
+Plugit Discord Bot
