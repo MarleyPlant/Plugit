@@ -3,10 +3,10 @@ const client = new Discord.Client();
 const fs = require("fs");
 const glob = require("glob");
 const archy = require("archy");
-var log = require('../lib/log');
+var log = require(__dirname + '/../lib/log');
 var path = require('path');
 var chalk = require('chalk');
-var config = require('./config');
+var config = require(__dirname + '/config');
 var commands = {}; //Create Dictionary to store Commands
 
 function getModulesPaths () {
@@ -67,10 +67,10 @@ var loadCommands = function() {
       }
     }
 
-    var files = fs.readdirSync("../modules/");
+    var files = fs.readdirSync(__dirname + "/../modules/");
     for (let file of files) {
         if (file.endsWith('.js')) {
-          commands[file.slice(0, -3)] = require("../modules/" + file);
+          commands[file.slice(0, -3)] = require(__dirname + "/../modules/" + file);
   			  if(config.debug) {
               console.log("Loaded " + file);
           }
