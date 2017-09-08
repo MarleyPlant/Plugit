@@ -88,8 +88,8 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-  if ( msg.content.split(config.prefix)[1].split(" ")[0] ) {
-    var command = msg.content.split("!")[1];
+  if ( msg.content.indexOf('!') !== -1 ) {
+    var command = msg.content.split(config.prefix)[1].split(" ")[0];
     if(command in commands){
       if(config.delete_commands){
          msg.delete();
