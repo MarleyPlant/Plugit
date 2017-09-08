@@ -1,0 +1,7 @@
+var config = {};
+
+config.token = 'token';
+config.clientId = 'client-id'
+config.clientSecret = 'client-secret'
+
+module.exports = config;

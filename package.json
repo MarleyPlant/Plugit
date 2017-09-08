@@ -1,0 +1,26 @@
+{
+  "name": "plugit",
+  "version": "1.0.0",
+  "description": "Plugit, A flexible modular Discord bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MarleyPlant/Plugit.git"
+  },
+  "keywords": [
+    "Discord",
+    "Discord-Bot"
+  ],
+  "author": "Marley joseph Plant",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MarleyPlant/Plugit/issues"
+  },
+  "homepage": "https://github.com/MarleyPlant/Plugit#readme",
+  "dependencies": {
+    "discord.js": "^11.2.1"
+  }
+}
