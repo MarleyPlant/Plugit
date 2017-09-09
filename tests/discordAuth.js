@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
-var config = require('../src/config')
+var config = require('__dirname/../bin/config')
 
 
 client.on('ready', () => {
