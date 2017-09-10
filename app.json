@@ -2,5 +2,21 @@
   "name": "Plugit",
   "description": "Plugit Discord Bot",
   "repository": "https://github.com/MarleyPlant/plugit",
-  "keywords": ["discord", "nodejs", "discord-bot"]
+  "keywords": ["discord", "nodejs", "discord-bot"],
+  "env": {
+    "token": {
+      "description": "Discord API Bot Token",
+      "required": true
+    },
+    "prefix": {
+      "description": "Command prefix to be used(!help has a command prefix of !)",
+      "value": "!",
+      "required": true
+    },
+    "debug": {
+      "description": "Enable or disable debug mode",
+      "value": false,
+      "required": false
+    }
+  }
 }
