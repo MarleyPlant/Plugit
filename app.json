@@ -2,6 +2,5 @@
   "name": "Plugit",
   "description": "Plugit Discord Bot",
   "repository": "https://github.com/MarleyPlant/plugit",
-  "logo": "",
   "keywords": ["discord", "nodejs", "discord-bot"]
 }
