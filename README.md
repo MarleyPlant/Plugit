@@ -31,6 +31,7 @@ $ npm start
 
 Plugit is currently extendable using the following modules.
 
-| Plugin | README |
+| Module | Repository |
 | ------ | ------ |
-| null | [modules/null/README.md](https://example.com) |
+| General | [modules/general.js](https://github.com/MarleyPlant/Plugit/blob/master/modules/general.js) |
+| Overwatch | Coming Soon |
