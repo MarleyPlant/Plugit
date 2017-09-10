@@ -9,7 +9,8 @@ module.exports = {
   clear: {
     name: "clear",
     main: function(bot, msg) {
-      msg.channel.fetchMessages({limit: 10}).then(
+      args = msg.content.split(" ");
+      msg.channel.fetchMessages({limit: args[1]}).then(
         messages => msg.channel.bulkDelete(messages)
       );
     },
