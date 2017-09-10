@@ -8,12 +8,13 @@ module.exports = {
   },
   clear: {
     name: "clear",
+    parameters: "(Number)",
     main: function(bot, msg) {
       args = msg.content.split(" ");
       msg.channel.fetchMessages({limit: args[1]}).then(
         messages => msg.channel.bulkDelete(messages)
       );
     },
-    help: 'Clear The Last 10 Messages In the chat'
+    help: 'Clear The Last x Messages In the chat'
   }
 };

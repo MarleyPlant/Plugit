@@ -1,11 +1,11 @@
 const Discord = require("discord.js");
-const client = new Discord.Client();
 const fs = require("fs");
 const glob = require("glob");
 const archy = require("archy");
 const log = require(__dirname + '/../lib/log');
 const path = require('path');
 const chalk = require('chalk');
+var client = new Discord.Client();
 var commands = {}; //Create Dictionary to store Commands
 
 function getModulesPaths () {
@@ -58,6 +58,23 @@ function logModules(Modules) {
 }
 
 var loadCommands = function() {
+    //Help Command
+    commands["help"] = {
+      name: "help",
+      help: "Display A List of Commands And Their Features!",
+      main: function(bot, msg) {
+        embed = new Discord.RichEmbed()
+        .setAuthor(client.user.username, client.user.defaultAvatarURL)
+        for (command in commands) {
+          if(commands[command].parameters){
+            embed.addField(process.env.prefix + commands[command].name + " " + commands[command].parameters, commands[command].help, true);
+          } else {
+            embed.addField(process.env.prefix + commands[command].name, commands[command].help, true);
+          }
+        }
+        msg.channel.send({embed})
+      }
+    }
 
     //Load NPM Modules
     var modules = getAllModules();
