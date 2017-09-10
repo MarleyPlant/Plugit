@@ -61,10 +61,10 @@ var loadCommands = function() {
 
     //Load NPM Modules
     var modules = getAllModules();
-    for (let command of modules) {
-      commands[module.name] = require(module.path + "/" + module.pkg.main);
-      if(config.debug) {
-        console.log("Loaded " + module.name);
+    for (let file of modules) {
+      var module = require(file.path + "/" + file.pkg.main);
+      for (command in module) {
+        commands[command] = module[command];
       }
     }
 
