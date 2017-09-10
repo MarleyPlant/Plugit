@@ -6,7 +6,6 @@ const archy = require("archy");
 var log = require(__dirname + '/../lib/log');
 var path = require('path');
 var chalk = require('chalk');
-var config = require(__dirname + '/config');
 var commands = {}; //Create Dictionary to store Commands
 
 function getModulesPaths () {
@@ -71,7 +70,7 @@ var loadCommands = function() {
     for (let file of files) {
         if (file.endsWith('.js')) {
           commands[file.slice(0, -3)] = require(__dirname + "/../modules/" + file);
-  			  if(config.debug) {
+  			  if(process.env.debug) {
               console.log("Loaded " + file);
           }
     }
@@ -83,15 +82,15 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log('Installed NPM Modules: ');
   logModules(getAllModules());
-  client.user.setGame(config.playing)
+  client.user.setGame(process.env.playing)
   loadCommands();
 });
 
 client.on('message', msg => {
   if ( msg.content.indexOf('!') !== -1 ) {
-    var command = msg.content.split(config.prefix)[1].split(" ")[0];
+    var command = msg.content.split(process.env.prefix)[1].split(" ")[0];
     if(command in commands){
-      if(config.delete_commands){
+      if(process.env.delete_commands){
          msg.delete();
       }
       commands[command].main(client, msg);
@@ -99,4 +98,4 @@ client.on('message', msg => {
   }
 });
 
-client.login(config.token);
+client.login(process.env.token);
