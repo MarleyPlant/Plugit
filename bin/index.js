@@ -58,36 +58,41 @@ function logModules(Modules) {
 }
 
 var loadCommands = function() {
+
+    //Load NPM Modules
     var modules = getAllModules();
-    for (let module of modules) {
+    for (let command of modules) {
       commands[module.name] = require(module.path + "/" + module.pkg.main);
       if(config.debug) {
         console.log("Loaded " + module.name);
       }
     }
 
+    //Load Local Modules
     var files = fs.readdirSync(__dirname + "/../modules/");
     for (let file of files) {
-        if (file.endsWith('.js')) {
-          commands[file.slice(0, -3)] = require(__dirname + "/../modules/" + file);
-  			  if(process.env.debug) {
-              console.log("Loaded " + file);
-          }
+      if (file.endsWith('.js')) {
+        var module = require(__dirname + "/../modules/" + file);
+        for (command in module) {
+          commands[command] = module[command];
+        }
+        if(process.env.debug) {
+            console.log("Loaded " + file.slice(0, -3) + " Module");
+        }
+      }
     }
-  }
-  console.log("———— Commands Loaded! ————");
+    console.log("———— Modules Loaded! ————");
 }
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  console.log('Installed NPM Modules: ');
   logModules(getAllModules());
   client.user.setGame(process.env.playing)
   loadCommands();
 });
 
 client.on('message', msg => {
-  if ( msg.content.indexOf('!') !== -1 ) {
+  if ( msg.content.indexOf(process.env.prefix) !== -1 ) {
     var command = msg.content.split(process.env.prefix)[1].split(" ")[0];
     if(command in commands){
       if(process.env.delete_commands){
