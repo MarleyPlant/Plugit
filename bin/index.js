@@ -3,9 +3,9 @@ const client = new Discord.Client();
 const fs = require("fs");
 const glob = require("glob");
 const archy = require("archy");
-var log = require(__dirname + '/../lib/log');
-var path = require('path');
-var chalk = require('chalk');
+const log = require(__dirname + '/../lib/log');
+const path = require('path');
+const chalk = require('chalk');
 var commands = {}; //Create Dictionary to store Commands
 
 function getModulesPaths () {

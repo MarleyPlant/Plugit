@@ -5,11 +5,11 @@
   "keywords": ["discord", "nodejs", "discord-bot"],
   "env": {
     "token": {
-      "description": "Discord API Bot Token",
+      "description": "Discord API Token",
       "required": true
     },
     "prefix": {
-      "description": "Command prefix to be used(!help has a command prefix of !)",
+      "description": "Command prefix to be used (!help has a command prefix of !)",
       "value": "!",
       "required": true
     },
