@@ -34,6 +34,7 @@ function findModules (searchpaths) {
       try {
         Module.pkg = require(path.join(searchpath, match, 'package.json'));
       } catch (e) {
+        console.log(e)
       }
       return Module;
     }));
@@ -112,7 +113,7 @@ client.on('message', msg => {
   if ( msg.content.indexOf(process.env.prefix) !== -1 ) {
     var command = msg.content.split(process.env.prefix)[1].split(" ")[0];
     if(command in commands){
-      if(process.env.delete_commands){
+      if(process.env.delete_commands == true){
          msg.delete();
       }
       commands[command].main(client, msg);
