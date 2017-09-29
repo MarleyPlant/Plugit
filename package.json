@@ -15,7 +15,7 @@
     "Discord",
     "Discord-Bot"
   ],
-  "author": "Marley joseph Plant",
+  "author": "Marley joseph Plant <marley@marleyplant.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MarleyPlant/Plugit/issues"
@@ -27,6 +27,8 @@
     "discord.js": "^11.2.1",
     "fs": "*",
     "glob": "^7.1.2",
-    "path": "^0.12.7"
+    "opusscript": "0.0.3",
+    "path": "^0.12.7",
+    "prism-media": "github:hydrabolt/prism-media"
   }
 }

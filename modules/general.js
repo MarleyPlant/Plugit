@@ -2,7 +2,7 @@ module.exports = {
   ping: {
     name: "ping",
     main: function(bot, msg) {
-      msg.channel.send("Pong!")
+      msg.channel.send(`${bot.ping}ms pong!`)
     },
     help: 'Ping the bot'
   },

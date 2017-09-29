@@ -104,12 +104,14 @@ var loadCommands = function() {
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  console.log(`Connected to ${client.guilds.size} guilds, serving ${client.users.size} users.`);
+  loadCommands();
   logModules(getAllModules());
   client.user.setGame(process.env.playing)
-  loadCommands();
 });
 
 client.on('message', msg => {
+  if ( msg.author.bot ) return
   if ( msg.content.indexOf(process.env.prefix) !== -1 ) {
     var command = msg.content.split(process.env.prefix)[1].split(" ")[0];
     if(command in commands){
