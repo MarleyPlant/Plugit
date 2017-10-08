@@ -6,6 +6,7 @@ module.exports = {
     },
     help: 'Ping the bot'
   },
+
   clear: {
     name: "clear",
     parameters: "(Number)",
@@ -13,13 +14,14 @@ module.exports = {
       args = msg.content.split(" ");
       msg.channel.fetchMessages({limit: args[1]}).then(
         messages => msg.channel.bulkDelete(messages)
-      );
-    },
-  stats: {
-    name: "stats"
-    main: function(bot,msg) {
-
+      )
     }
-  }
+  },
+
+  stats: {
+    name: "stats",
+    main: function(bot,msg) {
+      msg.channel.send(`Connected to ${bot.guilds.size} guilds, serving ${bot.users.size} users.`)
+    }
   }
 };
