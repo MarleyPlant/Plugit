@@ -3,18 +3,25 @@
   "version": "1.0.0",
   "description": "Plugit, A flexible modular Discord bot",
   "main": "index.js",
+  "engines": {
+    "node": "7.8.0"
+  },
+
   "scripts": {
     "start": "node bin/index.js",
     "test": "node tests/discordAuth.js"
   },
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MarleyPlant/Plugit.git"
   },
+
   "keywords": [
     "Discord",
     "Discord-Bot"
   ],
+
   "author": "Marley joseph Plant <marley@marleyplant.com>",
   "license": "ISC",
   "bugs": {
