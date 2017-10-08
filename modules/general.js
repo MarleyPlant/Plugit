@@ -15,6 +15,11 @@ module.exports = {
         messages => msg.channel.bulkDelete(messages)
       );
     },
-    help: 'Clear The Last x Messages In the chat'
+  stats: {
+    name: "stats"
+    main: function(bot,msg) {
+
+    }
+  }
   }
 };

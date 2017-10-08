@@ -4,6 +4,6 @@ const manager = new discord.ShardingManager(`${__dirname}/index.js`, { totalShar
 manager.spawn()
 manager.on("launch", shard => {
   if (process.env.debug) {
-    console.log(`Launched Shart: ${shard.id}`)
+    console.log(`Launched Shard: ${shard.id}`)
   }
 })
