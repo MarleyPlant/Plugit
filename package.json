@@ -10,7 +10,7 @@
 
   "scripts": {
     "start": "node bin/index.js",
-    "test": "node tests/discordAuth.js"
+    "test": "node tests/compile.js"
   },
 
   "repository": {
