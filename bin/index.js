@@ -1,62 +1,9 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const glob = require("glob");
-const archy = require("archy");
-const log = require(__dirname + '/../lib/log');
-const path = require('path');
-const chalk = require('chalk');
-var client = new Discord.Client();
+const util = require("plugit-util");
+const client = new Discord.Client();
+
 var commands = {}; //Create Dictionary to store Commands
-
-function getModulesPaths () {
-  if (process.env.NODE_ENV === 'test') {
-    return [path.join(__dirname, '..', 'test')];
-  }
-  var sep = (process.platform === 'win32') ? ';' : ':';
-  var paths = [];
-
-  if (process.env.NODE_PATH) {
-    paths = paths.concat(process.env.NODE_PATH.split(sep));
-  } else {
-    if (process.platform === 'win32') {
-      paths.push(path.join(process.env.APPDATA, 'npm', 'node_modules'));
-    } else {
-      paths.push('/usr/lib/node_modules');
-    }
-  }
-  return paths;
-}
-
-function findModules (searchpaths) {
-  return searchpaths.reduce(function (arr, searchpath) {
-    return arr.concat(glob.sync('{@*/,}plugit-*', {cwd: searchpath, stat: true}).map(function (match) {
-      var Module = {path: path.join(searchpath, match), name: match.replace(/(?:@[\w]+[\/|\\]+)?plugit-/, ""), pkg: {}};
-      try {
-        Module.pkg = require(path.join(searchpath, match, 'package.json'));
-      } catch (e) {
-        console.log(e)
-      }
-      return Module;
-    }));
-  }, []);
-}
-
-function getAllModules () {
-  return findModules(getModulesPaths());
-}
-
-function logModules(Modules) {
-  var tree = {
-    label: 'Installed Modules',
-    nodes: Modules.map(function (gen) {
-      return {label: gen.name + (gen.pkg.version ? chalk.grey(' (' + gen.pkg.version + ')') : '')};
-    })
-  };
-  archy(tree).split('\n').forEach(function(v) {
-    if (v.trim().length === 0) return;
-    log(v);
-  });
-}
 
 var loadCommands = function() {
     //Help Command
@@ -78,7 +25,7 @@ var loadCommands = function() {
     }
 
     //Load NPM Modules
-    var modules = getAllModules();
+    var modules = util.modules.getModules();
     for (let file of modules) {
       var module = require(file.path + "/" + file.pkg.main);
       for (command in module) {
@@ -106,7 +53,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log(`Connected to ${client.guilds.size} guilds, serving ${client.users.size} users.`);
   loadCommands();
-  logModules(getAllModules());
+  util.modules.logModules(util.modules.getModules());
   client.user.setGame(process.env.playing)
 });
 

@@ -1,3 +1,5 @@
+const util = require("plugit-util");
+
 module.exports = {
   ping: {
     name: "ping",
@@ -10,9 +12,10 @@ module.exports = {
   clear: {
     name: "clear",
     parameters: "(Number)",
+    help: "clear messages from the chat.",
     main: function(bot, msg) {
-      args = msg.content.split(" ");
-      msg.channel.fetchMessages({limit: args[1]}).then(
+      args = util.args.parse(msg)
+      msg.channel.fetchMessages({limit: args[0]}).then(
         messages => msg.channel.bulkDelete(messages)
       )
     }
@@ -20,6 +23,7 @@ module.exports = {
 
   stats: {
     name: "stats",
+    help: "Display statistics for the bot instance." ,
     main: function(bot,msg) {
       msg.channel.send(`Connected to ${bot.guilds.size} guilds, serving ${bot.users.size} users.`)
     }
