@@ -1,7 +1,7 @@
 [![Logo](https://i.imgur.com/ltCv7rbr.png)]()
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/MarleyPlant/Plugit)
 [![Build Status](https://travis-ci.com/MarleyPlant/Plugit.svg?token=coQixfkXNuyuVgGAm5J4&branch=master)](https://travis-ci.com/MarleyPlant/Plugit)
-
+[![Discord Server](https://discordapp.com/api/guilds/367747780745232384/embed.png)](https://discord.gg/usefMdE)
 
 Plugit is  a modular self hosted discord bot. In the future we plan to add easy intergration to Heroku as well as many more improvements and features.
 
