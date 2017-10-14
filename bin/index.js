@@ -4,26 +4,25 @@ const util = require("plugit-util");
 const client = new Discord.Client();
 
 var commands = {}; //Create Dictionary to store Commands
-
-var loadCommands = function() {
-    //Help Command
-    commands["help"] = {
-      name: "help",
-      help: "Display A List of Commands And Their Features!",
-      main: function(bot, msg) {
-        embed = new Discord.RichEmbed()
-        .setAuthor(client.user.username, client.user.defaultAvatarURL)
-        for (command in commands) {
-          if(commands[command].parameters){
-            embed.addField(process.env.prefix + commands[command].name + " " + commands[command].parameters, commands[command].help, true);
-          } else {
-            embed.addField(process.env.prefix + commands[command].name, commands[command].help, true);
-          }
-        }
-        msg.channel.send({embed})
+//Help Command
+commands["help"] = {
+  name: "help",
+  help: "Display A List of Commands And Their Features!",
+  main: function(bot, msg) {
+    embed = new Discord.RichEmbed()
+    .setAuthor(client.user.username, client.user.defaultAvatarURL)
+    for (command in commands) {
+      if(commands[command].parameters){
+        embed.addField(process.env.prefix + commands[command].name + " " + commands[command].parameters, commands[command].help, true);
+      } else {
+        embed.addField(process.env.prefix + commands[command].name, commands[command].help, true);
       }
     }
+    msg.channel.send({embed})
+  }
+}
 
+var loadCommands = function() {
     //Load NPM Modules
     var modules = util.modules.getModules();
     for (let file of modules) {
