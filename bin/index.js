@@ -4,13 +4,15 @@ const util = require("plugit-util");
 const client = new Discord.Client();
 
 var commands = {}; //Create Dictionary to store Commands
+var events = {};
+
 //Help Command
 commands["help"] = {
   name: "help",
   help: "Display A List of Commands And Their Features!",
   main: function(bot, msg) {
     embed = new Discord.RichEmbed()
-    .setAuthor(client.user.username, client.user.defaultAvatarURL)
+    .setTitle("Bot Commands")
     for (command in commands) {
       if(commands[command].parameters){
         embed.addField(process.env.prefix + commands[command].name + " " + commands[command].parameters, commands[command].help, true);
@@ -26,9 +28,20 @@ var loadCommands = function() {
     //Load NPM Modules
     var modules = util.modules.getModules();
     for (let file of modules) {
-      var module = require(file.path + "/" + file.pkg.main);
-      for (command in module) {
-        commands[command] = module[command];
+      try {
+        var module = require(file.path + "/" + file.pkg.main);
+      }
+      catch (e) {
+        console.log("Skipped " + module)
+      }
+      finally {
+        for (command in module.commands) {
+          commands[command] = module.commands[command];
+        }
+
+        for (event in module.events) {
+          events[event] = module.commands[event];
+        }
       }
     }
 
@@ -37,8 +50,11 @@ var loadCommands = function() {
     for (let file of files) {
       if (file.endsWith('.js')) {
         var module = require(__dirname + "/../modules/" + file);
-        for (command in module) {
-          commands[command] = module[command];
+        for (command in module.commands) {
+          commands[command] = module.commands[command];
+        }
+        for (event in module.events) {
+          events[event] = module.events[event]
         }
         if(process.env.debug) {
             console.log("Loaded " + file.slice(0, -3) + " Module");
@@ -54,6 +70,12 @@ client.on('ready', () => {
   loadCommands();
   util.modules.logModules(util.modules.getModules());
   client.user.setGame(process.env.playing)
+
+  for (event in events) {
+    client.on(event, (arg1, arg2, arg3) => {
+      events[event].main(client, arg1)
+    })
+  }
 });
 
 client.on('message', msg => {
@@ -66,6 +88,10 @@ client.on('message', msg => {
       }
       commands[command].main(client, msg);
     }
+  }
+
+  if (events["message"]) {
+    events["message"].main(client, msg)
   }
 });
 
