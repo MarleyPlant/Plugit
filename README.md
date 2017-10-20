@@ -25,7 +25,7 @@ Install the dependencies and start the bot.
 ```sh
 $ cd plugit
 $ npm install
-$ npm start
+$ heroku local
 ```
 
 ### Modules
