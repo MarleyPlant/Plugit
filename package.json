@@ -27,9 +27,10 @@
   "homepage": "https://github.com/MarleyPlant/Plugit#readme",
   "dependencies": {
     "discord.js": "^11.2.1",
-    "fs": "*",
     "opusscript": "0.0.3",
     "plugit-util": "*",
-    "prism-media": "github:hydrabolt/prism-media"
+    "prism-media": "github:hydrabolt/prism-media",
+    "pg": "^7.3.0",
+    "fs": "*"
   }
 }

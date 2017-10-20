@@ -10,7 +10,7 @@
       "required": true
     },
     "prefix": {
-      "description": "Command prefix to be used",
+      "description": "Command prefix",
       "value": "!",
       "required": true
     },
@@ -19,5 +19,9 @@
       "value": false,
       "required": false
     }
-  }
+  },
+
+  "addons": [
+    "heroku-postgresql:hobby-dev"
+  ],
 }
