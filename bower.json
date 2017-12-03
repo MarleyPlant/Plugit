@@ -1,0 +1,34 @@
+{
+  "name": "plugit",
+  "description": "Plugit, A flexible modular Discord bot",
+  "main": "bin/index.js",
+  "authors": [
+    "Marley joseph Plant <marley@marleyplant.com>"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "Discord",
+    "Discord-Bot"
+  ],
+  "homepage": "https://github.com/MarleyPlant/Plugit",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7"
+  },
+
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    }
+  }
+}

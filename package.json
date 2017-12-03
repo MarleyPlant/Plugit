@@ -9,7 +9,9 @@
   },
   "scripts": {
     "start": "node bin/index.js",
-    "test": "node tests/compile.js"
+    "test": "node tests/compile.js",
+    "preinstall": "bower install",
+    "postinstall": "gulp"
   },
   "repository": {
     "type": "git",
@@ -27,10 +29,19 @@
   "homepage": "https://github.com/MarleyPlant/Plugit#readme",
   "dependencies": {
     "discord.js": "^11.2.1",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "fs": "*",
+    "gulp-filter": "^5.0.1",
+    "gulp": "^3.9.1",
+    "handlebars": "^4.0.11",
+    "main-bower-files": "^2.13.1",
     "opusscript": "0.0.3",
-    "plugit-util": "*",
-    "prism-media": "github:hydrabolt/prism-media",
     "pg": "^7.3.0",
-    "fs": "*"
+    "plugit-util": "*",
+    "prism-media": "github:hydrabolt/prism-media"
+  },
+  "devDependencies": {
+
   }
 }
