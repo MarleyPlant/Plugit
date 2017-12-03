@@ -10,6 +10,7 @@
   "scripts": {
     "start": "node bin/index.js",
     "test": "node tests/compile.js",
+    "express": "gulp; node express/express.js",
     "preinstall": "bower install",
     "postinstall": "gulp"
   },
@@ -41,7 +42,5 @@
     "plugit-util": "*",
     "prism-media": "github:hydrabolt/prism-media"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }
