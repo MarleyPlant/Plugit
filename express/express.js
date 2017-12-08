@@ -1,11 +1,17 @@
 var express = require('express');
 var app = express();
 
-var handlebars = require('express-handlebars').create({defaultLayout: 'main'});
+var hbs = require('express-handlebars').create({
+  defaultLayout: 'main',
+  extname: 'hbs',
+  layoutsDir: __dirname + '/views/layouts',
+  partialsDir: __dirname + '/views/partials'
+});
 
 app.set('port', (process.env.PORT || 5000));
-app.engine('handlebars', handlebars.engine);
-app.set('view engine', "handlebars");
+app.engine('hbs', hbs.engine);
+app.set('view engine', "hbs");
+app.set('views', __dirname + '/views');
 app.use(express.static(__dirname + '/www'));
 
 app.get('/', function(req, res) {
