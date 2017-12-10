@@ -27,13 +27,16 @@
     "bootstrap": {
       "main": [
         "dist/css/bootstrap.css",
-        "dist/js/bootstrap.js"
+        "dist/js/bootstrap.js",
+        "dist/fonts/glyphicons-halflings-regular.ttf"
       ]
     },
     "flat-ui": {
       "main": [
         "dist/css/flat-ui.css",
-        "dist/js/flat-ui.js"
+        "dist/js/flat-ui.js",
+        "dist/fonts/glyphicons/flat-ui-icons-regular.ttf",
+        "dist/fonts/lato/lato-bold.ttf"
       ]
     }
   }

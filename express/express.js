@@ -24,6 +24,10 @@ app.get('/', function(req, res) {
   res.render('login', {title: 'Login'});
 });
 
+app.get('/dashboard', function(req, res) {
+  res.render('dashboard', {title: 'dashboard'});
+});
+
 app.get('/404', function(req, res){
   res.render('404', {title: 'Crazy Shit!'});
 });
