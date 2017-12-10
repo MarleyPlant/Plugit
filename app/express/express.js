@@ -115,8 +115,12 @@ app.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+var discord = {
+  messages: 296,
+  commands: 100
+}
 app.get('/dashboard',isLoggedIn, function(req, res) {
-  res.render('dashboard', {title: 'dashboard', user: req.user});
+  res.render('dashboard', {title: 'dashboard', user: req.user, discord: discord});
 });
 
 app.use(function (req, res, next) {
