@@ -22,7 +22,10 @@
     "Discord",
     "Discord-Bot"
   ],
-  "author": "Marley joseph Plant <marley@marleyplant.com>",
+  "author": "Marley Joseph Plant <marley@marleyplant.com>",
+  "contributors": [
+
+  ],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MarleyPlant/Plugit/issues"
