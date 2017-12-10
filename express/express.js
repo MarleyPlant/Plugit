@@ -28,10 +28,9 @@ app.get('/dashboard', function(req, res) {
   res.render('dashboard', {title: 'dashboard'});
 });
 
-app.get('/404', function(req, res){
-  res.render('404', {title: 'Crazy Shit!'});
-});
-
+app.use(function (req, res, next) {
+  res.status(404).render('404', {title: 'Crazy Shit!'});
+}) //Keep this at bottom of file
 
 db.connect() //Connect to database
   .then(() => console.log(`Successfully Connected To Database`))
