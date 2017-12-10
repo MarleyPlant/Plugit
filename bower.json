@@ -20,14 +20,20 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "^3.3.7"
+    "bootstrap": "^3.3.7",
+    "flat-ui": "^2.3.0"
   },
-
   "overrides": {
     "bootstrap": {
       "main": [
         "dist/css/bootstrap.css",
         "dist/js/bootstrap.js"
+      ]
+    },
+    "flat-ui": {
+      "main": [
+        "dist/css/flat-ui.css",
+        "dist/js/flat-ui.js"
       ]
     }
   }
