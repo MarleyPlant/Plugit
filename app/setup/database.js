@@ -1,5 +1,5 @@
 const pg = require('pg');
-const config = require('../config.json')
+const config = require('../express/config.json')
 //const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
 const client = new pg.Client({
   connectionString: config.connectionString,

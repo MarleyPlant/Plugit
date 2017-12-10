@@ -1,7 +1,7 @@
 {
   "name": "plugit",
   "description": "Plugit, A flexible modular Discord bot",
-  "main": "bin/index.js",
+  "main": "app/discord/index.js",
   "authors": [
     "Marley joseph Plant <marley@marleyplant.com>"
   ],

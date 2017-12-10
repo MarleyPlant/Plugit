@@ -2,7 +2,7 @@ var gulp = require('gulp');
     mainBowerFiles = require('main-bower-files');
     filter = require("gulp-filter");
 
-var buildpath = "express/www"
+var buildpath = "app/express/www"
 gulp.task('default', ['bower'])
 gulp.task('bower', ['bower-js', 'bower-css', 'bower-fonts'])
 

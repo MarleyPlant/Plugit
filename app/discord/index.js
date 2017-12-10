@@ -58,11 +58,11 @@ var loadModules = function() {
     }
 
     //Load Local Modules
-    var files = fs.readdirSync(__dirname + "/../modules/");
+    var files = fs.readdirSync(__dirname + "/../../modules/");
     for (let file of files) {
       if (file.endsWith('.js')) {
         try {
-          var module = require(__dirname + "/../modules/" + file);
+          var module = require(__dirname + "/../../modules/" + file);
         }
         catch(e) {
           console.log(e)

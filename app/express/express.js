@@ -1,6 +1,5 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var app = express();
 var pg = require('pg');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
@@ -9,6 +8,8 @@ var config = require('./config.json')
 var session = require('express-session');
 var pgSession = require('connect-pg-simple')(session);
 
+
+var app = express();
 var db = new pg.Client({
   connectionString: config.connectionString,
   ssl: true,
@@ -77,7 +78,7 @@ app.use(session({
   store: new pgSession({
     pool : db
   }),
-  secret: config.SECRET_KEY,
+  secret: config.secret,
   resave: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
 }));

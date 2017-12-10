@@ -1,1 +1,1 @@
-BOT: node bin/index.js
+BOT: node app/discord/index.js
