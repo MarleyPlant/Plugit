@@ -58,5 +58,6 @@ typings/
 # dotenv environment variables file
 .env
 
-#Gulp build directory
+# Web Interface
 express/www
+express/config.json

@@ -1,5 +1,11 @@
 var express = require('express');
 var app = express();
+var pg = require('pg');
+var config = require('./config.json')
+var db = new pg.Client({
+  connectionString: config.connectionString,
+  ssl: true,
+});
 
 var hbs = require('express-handlebars').create({
   defaultLayout: 'main',
@@ -21,6 +27,14 @@ app.get('/', function(req, res) {
 app.get('/404', function(req, res){
   res.render('404', {title: 'Crazy Shit!'});
 });
+
+
+db.connect() //Connect to database
+  .then(() => console.log(`Successfully Connected To Database`))
+  .catch(e => {
+    console.error('Connection error', e.stack)
+    process.exit()
+  })
 
 app.listen(app.get('port'));
 

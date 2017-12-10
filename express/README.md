@@ -11,6 +11,16 @@ From the web interface they will be able to monitor uptime aswell as eventually 
 * [express-handlebars](https://github.com/ericf/express-handlebars) - A Handlebars view engine for Express which doesn't suck.
 
 
+# Config
+To connect to the database you must specify the connectionString in the config.json file.
+to do this create the file config.json with the following contents.
+```
+{
+  "connectionString": ""
+}
+```
+put your connection string inbetween the " " save the file and run the server.
+In the future we will use the .env file method of getting config variables.
 
 # Alright so lets talk handlebars.
 
