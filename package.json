@@ -2,14 +2,17 @@
   "name": "plugit",
   "version": "1.0.0",
   "description": "Plugit, A flexible modular Discord bot",
-  "main": "index.js",
+  "main": "app/discord/index.js",
   "engines": {
     "node": "7.10.0",
     "npm": "5"
   },
   "scripts": {
     "start": "node bin/index.js",
-    "test": "node tests/compile.js"
+    "test": "node tests/compile.js",
+    "express": "gulp; node app/express/express.js",
+    "preinstall": "bower install",
+    "postinstall": "gulp; node app/setup/database.js"
   },
   "repository": {
     "type": "git",
@@ -19,18 +22,31 @@
     "Discord",
     "Discord-Bot"
   ],
-  "author": "Marley joseph Plant <marley@marleyplant.com>",
+  "author": "Marley Joseph Plant <marley@marleyplant.com>",
+  "contributors": [],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MarleyPlant/Plugit/issues"
   },
   "homepage": "https://github.com/MarleyPlant/Plugit#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "connect-pg-simple": "^4.2.1",
     "discord.js": "^11.2.1",
+    "express": "^4.16.2",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "fs": "*",
+    "gulp": "^3.9.1",
+    "gulp-filter": "^5.0.1",
+    "handlebars": "^4.0.11",
+    "main-bower-files": "^2.13.1",
     "opusscript": "0.0.3",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pg": "^7.4.0",
     "plugit-util": "*",
-    "prism-media": "github:hydrabolt/prism-media",
-    "pg": "^7.3.0",
-    "fs": "*"
-  }
+    "prism-media": "github:hydrabolt/prism-media"
+  },
+  "devDependencies": {}
 }

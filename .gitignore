@@ -57,3 +57,7 @@ typings/
 
 # dotenv environment variables file
 .env
+
+# Web Interface
+app/express/www
+app/express/config.json

@@ -9,6 +9,10 @@
       "description": "Discord API Token",
       "required": true
     },
+    "secret": {
+      "description": "A secret key for verifying the integrity of signed cookies.",
+      "generator": "secret"
+    },
     "prefix": {
       "description": "Command prefix",
       "value": "!",
