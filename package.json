@@ -11,8 +11,7 @@
     "start": "node bin/index.js",
     "test": "node tests/compile.js",
     "express": "gulp; node app/express/express.js",
-    "preinstall": "bower install",
-    "postinstall": "gulp; node app/setup/database.js"
+    "postinstall": "node app/setup/database.js; ./node_modules/bower/bin/bower install; gulp;"
   },
   "repository": {
     "type": "git",
@@ -31,6 +30,7 @@
   "homepage": "https://github.com/MarleyPlant/Plugit#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "bower": "^1.8.2",
     "connect-pg-simple": "^4.2.1",
     "discord.js": "^11.2.1",
     "express": "^4.16.2",

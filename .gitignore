@@ -60,4 +60,4 @@ typings/
 
 # Web Interface
 app/express/www
-app/express/config.json
+app/config.json

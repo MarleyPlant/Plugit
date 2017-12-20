@@ -4,10 +4,11 @@ var pg = require('pg');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var bcrypt = require('bcryptjs');
-var config = require('./config.json')
+var config = require('../config.json')
 var session = require('express-session');
 var pgSession = require('connect-pg-simple')(session);
-
+var events = require('events');
+var emitter = new events.EventEmitter();
 
 var app = express();
 var db = new pg.Client({
@@ -78,7 +79,7 @@ app.use(session({
   store: new pgSession({
     pool : db
   }),
-  secret: config.secret,
+  secret: process.env.secret,
   resave: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
 }));
@@ -86,6 +87,16 @@ app.use(express.static(__dirname + '/www'));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/shutdown', isLoggedIn, function(req, res) {
+  res.redirect('/dashboard');
+  emitter.emit("shutdown");
+});
+
+
+app.get('/startup', isLoggedIn, function(req, res) {
+  res.redirect('/dashboard');
+  emitter.emit("start");
+})
 
 app.get('/', function(req, res) {
   if (req.isAuthenticated()){
@@ -108,7 +119,6 @@ app.post('/login', (req, res, next) => {
     if (user) {
       req.logIn(user, function (err) {
         if (err) { console.log(err); return}
-        console.log("Logged in")
         return res.redirect('/dashboard')
       });
     }
@@ -128,7 +138,6 @@ app.use(function (req, res, next) {
 }) //Keep this at bottom of file
 
 db.connect() //Connect to database
-  .then(() => console.log(`Successfully Connected To Database`))
   .catch(e => {
     console.error('Connection error', e.stack)
     process.exit()
@@ -136,3 +145,4 @@ db.connect() //Connect to database
 
 app.listen(app.get('port'));
 console.log('Now listening on ' + app.get('port')); // To know when the server starts.
+module.exports = emitter

@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const fs = require("fs");
 const util = require("plugit-util");
 const pg = require('pg');
-
+const expressServer = require('../express/express')
 
 //Create Clients
 const db = new pg.Client({
@@ -16,6 +16,14 @@ const client = new Discord.Client();
 var commands = {};
 var events = {};
 
+//Express Server Communication
+expressServer.on("shutdown", function() {
+  client.destroy()
+});
+
+expressServer.on("start", function() {
+  client.login(process.env.token)
+})
 
 //Help Command
 commands["help"] = {
@@ -124,6 +132,9 @@ client.on('message', msg => {
   }
 });
 
+client.on('disconnect', data => {
+  console.log("Discord Client Shutdown!")
+})
 
 
 console.log("———————— Plugit! ————————");
