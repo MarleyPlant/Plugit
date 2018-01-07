@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const util = require("plugit-util");
 const pg = require('pg');
 const expressServer = require('../express/express')
+const util = require("../util");
 
 //Create Clients
 const db = new pg.Client({

@@ -1,4 +1,4 @@
-const util = require("plugit-util");
+const util = require("../app/util");
 
 module.exports = {
   events: {
