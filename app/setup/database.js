@@ -1,8 +1,6 @@
 const pg = require('pg');
-const config = require('../config.json')
-const connectionString = process.env.DATABASE_URL || config.connectionString;
 const client = new pg.Client({
-  connectionString: connectionString,
+  connectionString: process.env.DATABASE_URL,
   ssl: true,
 });
 
