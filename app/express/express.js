@@ -1,36 +1,14 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var pg = require('pg');
-var passport = require('passport');
-var Strategy = require('passport-local').Strategy;
-var bcrypt = require('bcryptjs');
-var config = require('../config.json')
 var session = require('express-session');
 var pgSession = require('connect-pg-simple')(session);
+var passport = require('passport');
 var events = require('events');
 var emitter = new events.EventEmitter();
-
 var app = express();
-var db = new pg.Client({
-  connectionString: config.connectionString,
-  ssl: true,
-});
-
-passport.use('local-signin', new Strategy(
-  {
-    usernameField : 'email',
-    passwordField : 'password',
-    passReqToCallback : true // allows us to pass back the entire request to the callback
-  },
-  function(req, email, password, cb) {
-    db.query("SELECT *" +
-           "FROM users " +
-           "WHERE username=$1", [email], (err, res) => {
-             user=res.rows[0]
-             if (!bcrypt.compareSync(password, user.password)) { return cb(null, false); } //Check passwords
-             return cb(null, user); //Return user
-           })
-  }));
+var pg = require('./pg/index')
+require('./passport/index')
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
@@ -41,27 +19,6 @@ function isLoggedIn(req, res, next) {
     // if they aren't redirect them to the home page
     res.redirect('/');
 }
-
-function signUp(username, password){
-  const salt = bcrypt.genSaltSync();
-  const hash = bcrypt.hashSync(password, salt);
-  db.query("INSERT INTO users (username, password) VALUES ($1, $2)", [username, hash], (err, res) => {
-    if(err) {console.log(err)}
-  })
-}
-
-passport.serializeUser((user, done) => {
-  done(null, user.userid);
-});
-
-passport.deserializeUser((id, cb) => {
-  db.query("SELECT *" +
-         "FROM users " +
-         "WHERE userid=$1", [id], (err, res) => {
-           user=res.rows[0]
-           return cb(null, user); //Return user
-         })
-});
 
 var hbs = require('express-handlebars').create({
   defaultLayout: 'main',
@@ -77,7 +34,7 @@ app.set('views', __dirname + '/views');
 app.use( bodyParser.urlencoded({ extended: true }) );
 app.use(session({
   store: new pgSession({
-    pool : db
+    pool : pg
   }),
   secret: process.env.secret,
   resave: false,
@@ -137,7 +94,7 @@ app.use(function (req, res, next) {
   res.status(404).render('404', {title: 'Crazy Shit!'});
 }) //Keep this at bottom of file
 
-db.connect() //Connect to database
+pg.connect() //Connect to database
   .catch(e => {
     console.error('Connection error', e.stack)
     process.exit()
