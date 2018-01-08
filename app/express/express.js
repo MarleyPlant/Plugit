@@ -10,6 +10,13 @@ var app = express();
 var pg = require('./pg/index')
 require('./passport/index')
 
+// Requiring server request handling modules.
+var shutdownController = require('./controllers/shutdown');
+var startupController = require('./controllers/startup');
+var logoutController = require('./controllers/logout');
+var loginController = require('./controllers/login');
+var dashboardController = require('./controllers/dashboard');
+
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on
@@ -44,16 +51,10 @@ app.use(express.static(__dirname + '/www'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/shutdown', isLoggedIn, function(req, res) {
-  res.redirect('/dashboard');
-  emitter.emit("shutdown");
-});
-
-
-app.get('/startup', isLoggedIn, function(req, res) {
-  res.redirect('/dashboard');
-  emitter.emit("start");
-})
+var discord = {
+  messages: 296,
+  commands: 100
+};
 
 app.get('/', function(req, res) {
   if (req.isAuthenticated()){
@@ -63,32 +64,11 @@ app.get('/', function(req, res) {
   res.render('login', {title: 'Login'});
 });
 
-app.get('/logout', isLoggedIn, (req,res) => {
-  req.session.destroy(function (err) {
-     res.redirect('/'); //Inside a callback… bulletproof!
-   });
-})
-
-app.post('/login', (req, res, next) => {
-  passport.authenticate('local-signin', (err, user, info) => {
-    if (err) { console.log(err); return}
-    if (!user) { console.log("User not found"); return}
-    if (user) {
-      req.logIn(user, function (err) {
-        if (err) { console.log(err); return}
-        return res.redirect('/dashboard')
-      });
-    }
-  })(req, res, next);
-});
-
-var discord = {
-  messages: 296,
-  commands: 100
-}
-app.get('/dashboard',isLoggedIn, function(req, res) {
-  res.render('dashboard', {title: 'dashboard', user: req.user, discord: discord});
-});
+shutdownController(app, isLoggedIn, emitter);
+startupController(app, isLoggedIn, emitter);
+logoutController(app, isLoggedIn);
+loginController(app, passport);
+dashboardController(app, isLoggedIn, discord);
 
 app.use(function (req, res, next) {
   res.status(404).render('404', {title: 'Crazy Shit!'});
