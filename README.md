@@ -1,6 +1,6 @@
 [![Logo](https://i.imgur.com/ltCv7rbr.png)]()
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/MarleyPlant/Plugit)
-[![Build Status](https://travis-ci.com/MarleyPlant/Plugit.svg?token=coQixfkXNuyuVgGAm5J4&branch=master)](https://travis-ci.com/MarleyPlant/Plugit)
+[![Build Status](https://travis-ci.org/MarleyPlant/Plugit.svg?branch=master)](https://travis-ci.org/MarleyPlant/Plugit)
 [![Discord Server](https://discordapp.com/api/guilds/367747780745232384/embed.png)](https://discord.gg/usefMdE)
 [![dependencies Status](https://david-dm.org/marleyplant/Plugit/status.svg)](https://david-dm.org/marleyplant/Plugit)
 

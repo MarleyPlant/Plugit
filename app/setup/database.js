@@ -1,4 +1,5 @@
 const pg = require('pg');
+const bcrypt = require('bcryptjs');
 const client = new pg.Client({
   connectionString: process.env.DATABASE_URL,
   ssl: true,
@@ -26,5 +27,16 @@ const res = client.query(
       console.log("Created Users Table")
     }
 }) //Create Users Table
+
+function signUp(username, password){
+  const salt = bcrypt.genSaltSync();
+  const hash = bcrypt.hashSync(password, salt);
+  client.query("INSERT INTO users (username, password) VALUES ($1, $2)", [username, hash], (err, res) => {
+    if(err) {console.log(err)}
+  })
+}
+
+signUp("admin@admin.com", "admin");
+
 
 client.end()

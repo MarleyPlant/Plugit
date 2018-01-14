@@ -1,6 +1,6 @@
 const Discord = require("discord.js");
 const fs = require("fs");
-const util = require("plugit-util");
+const util = require("../app/util/index");
 const client = new Discord.Client();
 
 var commands = {}; //Create Dictionary to store Commands

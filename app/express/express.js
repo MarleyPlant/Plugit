@@ -5,21 +5,20 @@ var session = require('express-session');
 var pgSession = require('connect-pg-simple')(session);
 var passport = require('passport');
 var events = require('events');
+
+// initialize app
 var emitter = new events.EventEmitter();
 var app = express();
 var pg = require('./pg/index')
 require('./passport/index')
 
 // Requiring server middleware modules.
-var isLoggedIn = require('./middleware/isLoggedIn');
+var middleware = require('./middleware/index');
 
 // Requiring server request handling modules.
-var shutdownController = require('./controllers/shutdown');
-var startupController = require('./controllers/startup');
-var logoutController = require('./controllers/logout');
-var loginController = require('./controllers/login');
-var dashboardController = require('./controllers/dashboard');
+var controllers = require('./controllers/index')
 
+//initialize express-handlebars
 var hbs = require('express-handlebars').create({
   defaultLayout: 'main',
   extname: 'hbs',
@@ -27,6 +26,7 @@ var hbs = require('express-handlebars').create({
   partialsDir: __dirname + '/views/partials'
 });
 
+// Setup express
 app.set('port', (process.env.PORT || 5000));
 app.engine('hbs', hbs.engine);
 app.set('view engine', "hbs");
@@ -47,7 +47,7 @@ app.use(passport.session());
 var discord = {
   messages: 296,
   commands: 100
-};
+}; //Temporary Variable
 
 app.get('/', function(req, res) {
   if (req.isAuthenticated()){
@@ -57,11 +57,13 @@ app.get('/', function(req, res) {
   res.render('login', {title: 'Login'});
 });
 
-shutdownController(app, isLoggedIn, emitter);
-startupController(app, isLoggedIn, emitter);
-logoutController(app, isLoggedIn);
-loginController(app, passport);
-dashboardController(app, isLoggedIn, discord);
+
+// Use Controllers
+controllers.shutdown(app, middleware.isLoggedIn, emitter);
+controllers.startup(app, middleware.isLoggedIn, emitter);
+controllers.logout(app, middleware.isLoggedIn);
+controllers.login(app, passport);
+controllers.dashboard(app, middleware.isLoggedIn, discord);
 
 app.use(function (req, res, next) {
   res.status(404).render('404', {title: 'Crazy Shit!'});
