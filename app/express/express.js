@@ -10,22 +10,15 @@ var app = express();
 var pg = require('./pg/index')
 require('./passport/index')
 
+// Requiring server middleware modules.
+var isLoggedIn = require('./middleware/isLoggedIn');
+
 // Requiring server request handling modules.
 var shutdownController = require('./controllers/shutdown');
 var startupController = require('./controllers/startup');
 var logoutController = require('./controllers/logout');
 var loginController = require('./controllers/login');
 var dashboardController = require('./controllers/dashboard');
-
-// route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
-    // if user is authenticated in the session, carry on
-    if (req.isAuthenticated())
-        return next();
-
-    // if they aren't redirect them to the home page
-    res.redirect('/');
-}
 
 var hbs = require('express-handlebars').create({
   defaultLayout: 'main',
