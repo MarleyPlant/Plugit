@@ -1,7 +1,5 @@
 module.exports = {
-  shutdown: require('./shutdown'),
-  startup: require('./startup'),
-  logout: require('./logout'),
-  login: require('./login'),
+  bot: require('./bot'),
+  auth: require('./auth'),
   dashboard: require('./dashboard')
 }

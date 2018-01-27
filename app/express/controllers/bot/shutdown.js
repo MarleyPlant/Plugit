@@ -1,6 +1,6 @@
 module.exports = function(app, midware, emitter) {
-    app.get('/startup', midware, function(req, res) {
+    app.get('/bot/shutdown', midware, function(req, res) {
         res.redirect('/dashboard');
-        emitter.emit("start");
+        emitter.emit("shutdown");
     });
 }

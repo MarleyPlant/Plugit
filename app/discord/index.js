@@ -103,7 +103,7 @@ var loadModules = function() {
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log(`Connected to ${client.guilds.size} guilds, serving ${client.users.size} users.`);
-  client.user.setGame(process.env.playing)
+  client.user.setActivity(process.env.playing)
 
   //Load commands & events
   loadModules();

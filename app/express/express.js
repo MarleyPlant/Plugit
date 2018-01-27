@@ -21,10 +21,10 @@ var knex = require('knex')(require('../../knexfile'))
 require('./passport')(knex, passport)
 
 // Requiring server middleware modules.
-var middleware = require('./middleware/index');
+var middleware = require('./middleware');
 
 // Requiring server request handling modules.
-var controllers = require('./controllers/index')
+var controllers = require('./controllers')
 
 //initialize express-handlebars
 var hbs = require('express-handlebars').create({
@@ -64,10 +64,10 @@ app.get('/', function(req, res) {
 
 
 // Use Controllers
-controllers.shutdown(app, middleware.isLoggedIn, emitter);
-controllers.startup(app, middleware.isLoggedIn, emitter);
-controllers.logout(app, middleware.isLoggedIn);
-controllers.login(app, passport);
+controllers.bot.shutdown(app, middleware.isLoggedIn, emitter);
+controllers.bot.startup(app, middleware.isLoggedIn, emitter);
+controllers.auth.logout(app, middleware.isLoggedIn);
+controllers.auth.login(app, passport);
 controllers.dashboard(app, middleware.isLoggedIn, discord);
 
 app.use(function (req, res, next) {

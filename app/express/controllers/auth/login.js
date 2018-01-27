@@ -1,5 +1,5 @@
 module.exports = function (app, passport) {
-    app.post('/login', (req, res, next) => {
+    app.post('/auth/login', (req, res, next) => {
         passport.authenticate('local-signin', (err, user, info) => {
             if (err) { console.log(err); return}
             if (!user) { console.log("User not found"); return}
