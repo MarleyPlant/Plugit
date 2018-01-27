@@ -3,16 +3,16 @@ const should = chai.should();
 const chaiHttp = require('chai-http');
 chai.use(chaiHttp);
 
-const server = require('../app/express/express.js');
+const server = require('../app/express/express');
 const knex = server.knex;
 
-describe('POST /auth/login', () => {
+describe('POST /login', () => {
   it('should login a user', (done) => {
-    chai.request(server)
+    chai.request(server.app)
     .post('/login')
     .send({
-      username: 'admin',
-      password: 'admin'
+      username: "admin",
+      password: "admin"
     })
     .end((err, res) => {
       res.redirects.length.should.eql(0);

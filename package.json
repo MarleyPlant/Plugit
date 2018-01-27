@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node app/discord/index.js",
-    "test": "node test/compile.js",
+    "test": "./node_modules/mocha/bin/mocha",
     "express": "gulp; node app/express/express.js",
     "postinstall": "./node_modules/knex/bin/cli.js migrate:latest; ./node_modules/bower/bin/bower install; gulp;"
   },

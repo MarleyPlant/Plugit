@@ -5,6 +5,15 @@ var session = require('express-session');
 var passport = require('passport');
 var events = require('events');
 
+
+// Allow use of .env in a development enviroment
+try {
+  require('dotenv').config()
+} //If not in heroku enviroment then allow access to env veriable
+catch (e) {
+
+}
+
 // initialize app
 var emitter = new events.EventEmitter();
 var app = express();
@@ -68,4 +77,5 @@ app.use(function (req, res, next) {
 app.listen(app.get('port'));
 console.log('Now listening on ' + app.get('port')); // To know when the server starts.
 module.exports = emitter
+module.exports.app = app
 module.exports.knex = knex

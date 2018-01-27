@@ -4,6 +4,16 @@ const pg = require('pg');
 const expressServer = require('../express/express')
 const util = require("../util");
 
+
+// Allow use of .env in a development enviroment
+try {
+  require('dotenv').config()
+} //If not in heroku enviroment then allow access to env veriable
+catch (e) {
+
+}
+
+
 //Create Clients
 const knex = expressServer.knex
 const client = new Discord.Client();
