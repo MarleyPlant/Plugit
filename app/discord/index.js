@@ -5,10 +5,7 @@ const expressServer = require('../express/express')
 const util = require("../util");
 
 //Create Clients
-const db = new pg.Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
+const knex = expressServer.knex
 const client = new Discord.Client();
 
 
@@ -29,7 +26,7 @@ expressServer.on("start", function() {
 commands["help"] = {
   name: "help",
   help: "Display A List of Commands And Their Features!",
-  main: function(bot, db, msg) {
+  main: function(bot, knex, msg) {
     embed = new Discord.RichEmbed()
     .setTitle("Bot Commands")
     for (command in commands) {
@@ -104,13 +101,13 @@ client.on('ready', () => {
 
   //Handle events
   if (events['ready']) {
-    events['ready'].main(client, db)
+    events['ready'].main(client, knex)
   }
 
   for (event in events) {
     if (event == 'message') return
     client.on(event, (arg1) => {
-      events[event].main(client, db, arg1)
+      events[event].main(client, knex, arg1)
     })
   }
 });
@@ -123,12 +120,12 @@ client.on('message', msg => {
     var command = msg.content.split(process.env.prefix)[1].split(" ")[0];
     if(command in commands){
       if(process.env.delete_commands == true) msg.delete()
-      commands[command].main(client, db, msg);
+      commands[command].main(client, knex, msg);
     }
   }
 
   if (events["message"]) {
-    events["message"].main(client, db, msg)
+    events["message"].main(client, knex, msg)
   }
 });
 
@@ -138,13 +135,4 @@ client.on('disconnect', data => {
 
 
 console.log("———————— Plugit! ————————");
-
-db.connect() //Connect to database
-  .then(() => console.log(`Successfully Connected To Database`))
-  .catch(e => {
-    console.error('Connection error', e.stack)
-    process.exit()
-  })
-
-
 client.login(process.env.token); //Connect to Discord

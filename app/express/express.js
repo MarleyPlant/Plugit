@@ -2,15 +2,14 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var pg = require('pg');
 var session = require('express-session');
-var pgSession = require('connect-pg-simple')(session);
 var passport = require('passport');
 var events = require('events');
 
 // initialize app
 var emitter = new events.EventEmitter();
 var app = express();
-var pg = require('./pg/index')
-require('./passport/index')
+var knex = require('knex')(require('../../knexfile'))
+require('./passport')(knex, passport)
 
 // Requiring server middleware modules.
 var middleware = require('./middleware/index');
@@ -33,9 +32,6 @@ app.set('view engine', "hbs");
 app.set('views', __dirname + '/views');
 app.use( bodyParser.urlencoded({ extended: true }) );
 app.use(session({
-  store: new pgSession({
-    pool : pg
-  }),
   secret: process.env.secret,
   resave: false,
   cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days
@@ -69,12 +65,7 @@ app.use(function (req, res, next) {
   res.status(404).render('404', {title: 'Crazy Shit!'});
 }) //Keep this at bottom of file
 
-pg.connect() //Connect to database
-  .catch(e => {
-    console.error('Connection error', e.stack)
-    process.exit()
-  })
-
 app.listen(app.get('port'));
 console.log('Now listening on ' + app.get('port')); // To know when the server starts.
 module.exports = emitter
+module.exports.knex = knex
