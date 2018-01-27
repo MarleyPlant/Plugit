@@ -11,10 +11,29 @@ Plugit is  a modular self hosted discord bot. In the future we plan to add easy 
 
 Plugit uses a number of open source projects to work properly:
 * [node.js](https://nodejs.org/) - evented I/O for the backend
+* [Express](https://github.com/expressjs/express) - Fast, unopinionated, minimalist web framework for node.
 * [discord.js](https://discord.js.org/) - Discord API Wrapper For Node
-* [Plugit-Util](https://github.com/MarleyPlant/plugit-util) - Plugit Utilities
+* [Knex](https://github.com/tgriesser/knex) - A query builder for PostgreSQL, MySQL and SQLite3
+* [BCryptJS](https://github.com/kelektiv/node.bcrypt.js) - bcrypt for NodeJs
+* [Passport](https://github.com/jaredhanson/passport) - Simple, unobtrusive authentication for Node.js.
+* [Gulp](https://github.com/gulpjs/gulp) - The streaming build system
+* [Mocha](https://github.com/mochajs/mocha) - simple, flexible, fun javascript test framework for node.js & the browser
 
 And of course Plugit itself is open source with a [public repository](https://github.com/MarleyPlant/Plugit) on GitHub.
+
+### Config
+Plugit uses a `.env` file to configure its core variables, in the repository you will find a `.env.example` file. you must rename this file to `.env` and then fill in the configuration variables.
+
+| Variable | Function |
+| ------ | ------ |
+| Token | Your Discord Api Token |
+| Prefix | Prefix Before all commands
+| debug | true / false |
+| delete_commands | true / false |
+| shards | sharding mode |
+| warnings | true / false |
+| DATABASE_URL | Postgres Database URL |
+| secret | Session Secret |
 
 ### Installation
 
@@ -24,8 +43,9 @@ Install the dependencies and start the bot.
 
 ```sh
 $ cd plugit
-$ npm install
-$ heroku local
+$ npm install --dev
+$ mv .env.example .env
+$ npm start
 ```
 
 ### Modules

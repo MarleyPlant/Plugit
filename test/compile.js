@@ -1,11 +1,8 @@
-const Discord = require("discord.js");
 const fs = require("fs");
 const util = require("../app/util/index");
-const client = new Discord.Client();
 
-var commands = {}; //Create Dictionary to store Commands
-
-var loadCommands = function() {
+var loadCommands = function(callback) {
+    var commands = {}; //Create Dictionary to store Commands
     //Load NPM Modules
     var modules = util.modules.getModules();
     for (let file of modules) {
@@ -28,8 +25,37 @@ var loadCommands = function() {
         }
       }
     }
-    console.log("———— Modules Loaded! ————");
+
+    callback(commands);
 }
 
-loadCommands();
-util.modules.logModules(util.modules.getModules());
+describe('Should Compile Local And NPM Modules', () => {
+  it('Should create dictionary to store commands', (done) => {
+    loadCommands(function (commands) {
+      commands.should.have.own.property("events");
+      commands.should.have.own.property("commands");
+      done();
+    });
+  })
+
+  describe('Should Include All Local Commands', (done) => {
+    it('Should Include Ping Command', (done) => {
+      loadCommands(function (commands) {
+        commands.commands.should.have.own.property("ping");
+        done();
+      });
+    })
+    it('Should Include Clear Command', (done) => {
+      loadCommands(function (commands) {
+        commands.commands.should.have.own.property("clear");
+        done();
+      });
+    })
+    it('Should Include Stats Command', (done) => {
+      loadCommands(function (commands) {
+        commands.commands.should.have.own.property("stats");
+        done();
+      });
+    })
+  })
+})
