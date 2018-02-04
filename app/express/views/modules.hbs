@@ -1,0 +1,9 @@
+{{>navbar}}
+<div class="container-fluid">
+  <h2>Installable Modules: </h2>
+  <ul class="modules">
+    {{#each modules}}
+      <li>{{this.name}} ~ {{this.url}}</li>
+    {{/each}}
+  </ul>
+</div>
