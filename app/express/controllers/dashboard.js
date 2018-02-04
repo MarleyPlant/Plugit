@@ -1,5 +1,10 @@
-module.exports = function(app, midware, discordObj) {
-    app.get('/dashboard', midware, function(req, res) {
-        res.render('dashboard', {title: 'dashboard', user: req.user, discord: discordObj});
-    });
-}
+var router = require('express').Router();
+var midware = require('../middleware').isLoggedIn
+
+
+router.get('/', midware, function(req, res, next){
+  res.render('dashboard', {title: 'dashboard', user: req.user});
+});
+
+
+module.exports = router;

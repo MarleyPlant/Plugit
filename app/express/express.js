@@ -9,7 +9,7 @@ var events = require('events');
 // Allow use of .env in a development enviroment
 try {
   require('dotenv').config()
-} //If not in heroku enviroment then allow access to env veriable
+} // If not in heroku enviroment then allow access to env veriable
 catch (e) {
 
 }
@@ -23,10 +23,7 @@ require('./passport')(knex, passport)
 // Requiring server middleware modules.
 var middleware = require('./middleware');
 
-// Requiring server request handling modules.
-var controllers = require('./controllers')
-
-//initialize express-handlebars
+// initialize express-handlebars
 var hbs = require('express-handlebars').create({
   defaultLayout: 'main',
   extname: 'hbs',
@@ -49,11 +46,6 @@ app.use(express.static(__dirname + '/www'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-var discord = {
-  messages: 296,
-  commands: 100
-}; //Temporary Variable
-
 app.get('/', function(req, res) {
   if (req.isAuthenticated()){
     res.redirect('/dashboard')
@@ -62,13 +54,9 @@ app.get('/', function(req, res) {
   res.render('login', {title: 'Login'});
 });
 
-
 // Use Controllers
-controllers.bot.shutdown(app, middleware.isLoggedIn, emitter);
-controllers.bot.startup(app, middleware.isLoggedIn, emitter);
-controllers.auth.logout(app, middleware.isLoggedIn);
-controllers.auth.login(app, passport);
-controllers.dashboard(app, middleware.isLoggedIn, discord);
+app.use(require('./controllers'));
+
 
 app.use(function (req, res, next) {
   res.status(404).render('404', {title: 'Crazy Shit!'});
@@ -76,6 +64,10 @@ app.use(function (req, res, next) {
 
 app.listen(app.get('port'));
 console.log('Now listening on ' + app.get('port')); // To know when the server starts.
+
+
+app.set('passport', passport);
+app.set('knex', knex);
+app.set('emitter', emitter)
 module.exports = emitter
-module.exports.app = app
 module.exports.knex = knex
