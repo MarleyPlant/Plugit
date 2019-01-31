@@ -61,3 +61,6 @@ typings/
 # Web Interface
 app/express/www
 app/config.json
+
+cypress/integration/examples
+cypress/videos

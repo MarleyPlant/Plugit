@@ -1,29 +1,48 @@
-var gulp = require('gulp');
-    mainBowerFiles = require('main-bower-files');
-    filter = require("gulp-filter");
+var gulp        = require('gulp'),
+    sass        = require('gulp-sass'),
+    rename      = require('gulp-rename'),
+    cssmin      = require('gulp-cssnano'),
+    prefix      = require('gulp-autoprefixer'),
+    plumber     = require('gulp-plumber'),
+    sassLint    = require('gulp-sass-lint'),
+    sourcemaps  = require('gulp-sourcemaps');
 
-var buildpath = "app/express/www"
-gulp.task('default', ['bower'])
-gulp.task('bower', ['bower-js', 'bower-css', 'bower-fonts'])
+var buildpath = "/frontend/www"
 
-gulp.task("bower-js", function() {
-  return gulp.src(mainBowerFiles())
-    .pipe(filter('**/*.js'))
-    .pipe(gulp.dest(buildpath + "/js"))
-});
+var sassOptions = {
+  outputStyle: 'expanded',
+  includePaths: ['node_modules']
+};
 
-gulp.task("bower-css", function() {
-  return gulp.src(mainBowerFiles())
-    .pipe(filter('**/*.css'))
-    .pipe(gulp.dest(buildpath + "/css"))
-});
+var prefixerOptions = {
+  browsers: ['last 2 versions']
+};
 
-gulp.task("bower-fonts", function() {
-  return gulp.src(mainBowerFiles())
-    .pipe(filter(['**/*.ttf', '**/*.woff', '**/*.woff2']))
-    .pipe(gulp.dest(buildpath + "/fonts"))
-});
+// BUILD SUBTASKS
+// ---------------
 
-gulp.task("watch", function() {
-  gulp.watch("src/**/**", ['default'])
-})
+function compileStyles() {
+  return gulp.src('/frontend/scss/main.scss')
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(sass(sassOptions))
+    .pipe(prefix(prefixerOptions))
+    .pipe(rename('main.css'))
+    .pipe(gulp.dest(buildpath + '/css'))
+    .pipe(cssmin())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(gulp.dest(buildpath + '/css'))
+}
+
+function watchStyles() {
+  gulp.watch('app/express/scss/**/*.scss', compileStyles);
+}
+
+// BUILD TASKS
+// ------------
+
+const compile = gulp.parallel( compileStyles )
+const watch = gulp.parallel( watchStyles )
+const defaultTasks = gulp.series( compile, watch )
+
+exports.default = defaultTasks
