@@ -1,8 +1,20 @@
-### Node Express template project
+[![pipeline status](https://gitlab.com/plugitdev/plugit/badges/master/pipeline.svg)](https://gitlab.com/plugitdev/plugit/-/commits/master)
+[![coverage report](https://gitlab.com/plugitdev/plugit/badges/master/coverage.svg)](https://gitlab.com/plugitdev/plugit/-/commits/master)
 
+
+### Plugit Discord Bot 
 This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/gitlab-basics/create-project.html).
 
-Improvements can be proposed in the [original project](https://gitlab.com/gitlab-org/project-templates/express).
+
+We are using Discord.JS, Express, Postgres and Knex.JS to implement a discord bot that allows users to install plugins and custom commands.
+
+
+## Database
+The database will be using Postgres and Knex.JS.
+
+
+Database Relationship ER Diagram can be found [Here](https://app.lucidchart.com/invitations/accept/af12fac3-fb13-435f-a70c-f407b0b7a554).
+
 
 ### CI/CD with Auto DevOps
 
