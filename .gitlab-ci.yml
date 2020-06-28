@@ -16,13 +16,19 @@ services:
 cache:
   paths:
     - node_modules/
+    - public/stylesheets/
 
-test_async:
+test_gulp:
   script:
     - npm install
-    - node ./specs/start.js ./specs/async.spec.js
+    - npm run build
 
-test_db:
+test_mocha:
   script:
     - npm install
-    - node ./specs/start.js ./specs/db-postgres.spec.js
+    - npm run test
+
+# test_async:
+#   script:
+#     - npm install
+#     - npm start
