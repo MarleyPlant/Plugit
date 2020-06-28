@@ -28,7 +28,7 @@ test_mocha:
     - npm install
     - npm run test
 
-test_async:
-  script:
-    - npm install
-    - npm start
+# test_async:
+#   script:
+#     - npm install
+#     - npm start
