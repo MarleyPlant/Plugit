@@ -15,7 +15,6 @@ var sassOptions = {
 };
 
 var prefixerOptions = {
-  browsers: ['last 2 versions']
 };
 
 // BUILD SUBTASKS
@@ -43,6 +42,6 @@ function watchStyles() {
 
 const compile = gulp.parallel( compileStyles )
 const watch = gulp.parallel( watchStyles )
-const defaultTasks = gulp.series( compile, watch )
+const defaultTasks = gulp.series( compile )
 
 exports.default = defaultTasks
