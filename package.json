@@ -7,11 +7,15 @@
     "test": "mocha"
   },
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "discord.js": "^12.2.0",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "knex": "^0.21.1",
     "morgan": "~1.9.0",
+    "passport": "^0.4.1",
     "pug": "2.0.0-beta11"
   },
   "devDependencies": {

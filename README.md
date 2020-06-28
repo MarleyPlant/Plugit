@@ -1,5 +1,6 @@
 [![pipeline status](https://gitlab.com/plugitdev/plugit/badges/master/pipeline.svg)](https://gitlab.com/plugitdev/plugit/-/commits/master)
 [![coverage report](https://gitlab.com/plugitdev/plugit/badges/master/coverage.svg)](https://gitlab.com/plugitdev/plugit/-/commits/master)
+[![Discord Server](https://discordapp.com/api/guilds/367747780745232384/embed.png)](https://discord.gg/usefMdE)
 
 
 ### Plugit Discord Bot 
