@@ -2,11 +2,9 @@ require('dotenv').config();
 
 module.exports = {
     development: {
-        client: 'pg',
+        client: 'sqlite3',
         connection: {
-            database: process.env.POSTGRES_DB,
-            user: process.env.POSTGRES_USER,
-            password: process.env.POSTGRES_PASSWORD
+          filename: './dev.sqlite3'
         },
     },
 };
