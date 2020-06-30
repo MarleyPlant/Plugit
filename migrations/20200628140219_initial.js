@@ -14,8 +14,18 @@ exports.up = async (knex) => {
     table.dateTime('last_login').notNullable();
     addDefaultColumns(table);
   });
+
+  await knex.schema.createTable(tableNames.server, (table) => {
+    table.increments().notNullable();
+    table.integer('user_ID').unsigned().references(tableNames.user + 'id');
+    table.text('name').notNullable();
+    table.int( 'discord_ID').notNullable().unique();
+    table.text('directory').unique();
+    addDefaultColumns(table);
+  });
 };
 
 exports.down = async (knex) => {
   await knex.schema.dropTable(tableNames.user);
+  await knex.schema.dropTable(tableNames.server);
 };
