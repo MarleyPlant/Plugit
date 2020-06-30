@@ -1,1 +1,2 @@
-module.exports.user = 'users';
+module.exports.user = 'Users';
+module.exports.server = 'Servers';
