@@ -32,3 +32,8 @@ test_mocha:
 #   script:
 #     - npm install
 #     - npm start
+
+# test_knex:
+#   script:
+#     - npm install
+#     - npm run migrate
