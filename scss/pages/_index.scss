@@ -1,8 +1,7 @@
 #index {
     background-color: #7289da;
     .container-fluid {
-        @include flex-dat('center');
-        flex-direction: column;
+        @include flex-dat('center', 'column');
         min-height: 100vh;
 
         .btn {
