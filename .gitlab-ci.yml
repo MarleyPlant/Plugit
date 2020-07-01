@@ -20,12 +20,12 @@ cache:
 
 test_gulp:
   script:
-    - bin/install.sh
+    - ./bin/install.sh
     - npm run build
 
 test_mocha:
   script:
-    - bin/install.sh
+    - ./bin/install.sh
     - npm run test
 
 # test_async:
