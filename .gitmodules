@@ -1,0 +1,3 @@
+[submodule "public/scss/variable/mixins/SCSS-MUM"]
+	path = public/scss/variable/mixins/SCSS-MUM
+	url = ../../MarleyPlant/SCSS-MUM
