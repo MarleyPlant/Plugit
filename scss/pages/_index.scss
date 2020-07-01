@@ -1,0 +1,19 @@
+#index {
+    background-color: #7289da;
+    .container-fluid {
+        @include flex-dat('center');
+        flex-direction: column;
+        min-height: 100vh;
+
+        .btn {
+            svg {
+                padding-top: 2px;
+            }
+        }
+
+        .title {
+            padding-bottom: 16px;
+            color: white;
+        }
+    }
+}

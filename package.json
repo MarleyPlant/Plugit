@@ -9,6 +9,7 @@
     "migrate": "knex migrate:latest"
   },
   "dependencies": {
+    "bootstrap": "^4.5.0",
     "breakpoint-sass": "^2.7.1",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",

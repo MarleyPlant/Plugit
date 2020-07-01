@@ -1,5 +1,9 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  #index
+    #content.container-fluid
+      h2.title Sign In With Discord Now
+      a(href='/auth')
+        button.btn.btn-lg.btn-light
+          include includes/discordlogo
