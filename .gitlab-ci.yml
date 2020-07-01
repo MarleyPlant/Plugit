@@ -20,20 +20,20 @@ cache:
 
 test_gulp:
   script:
-    - npm install
+    - ./bin/install.sh
     - npm run build
 
 test_mocha:
   script:
-    - npm install
+    - ./bin/install.sh
     - npm run test
 
 # test_async:
 #   script:
-#     - npm install
+#     - bin/install.sh
 #     - npm start
 
 # test_knex:
 #   script:
-#     - npm install
+#     - bin/install.sh
 #     - npm run migrate

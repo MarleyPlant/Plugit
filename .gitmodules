@@ -1,6 +1,6 @@
-[submodule "public/scss/variable/mixins/SCSS-MUM"]
-	path = public/scss/variable/mixins/SCSS-MUM
-	url = ../../MarleyPlant/SCSS-MUM
-[submodule "public/scss/variable/mixins/scss-flex-dat"]
-	path = public/scss/variable/mixins/scss-flex-dat
+[submodule "scss/variable/mixins/scss-mum"]
+	path = scss/variable/mixins/scss-mum
+	url = ../../MarleyPlant/scss-mum
+[submodule "scss/variable/mixins/scss-flex-dat"]
+	path = scss/variable/mixins/scss-flex-dat
 	url = ../../gtusler/scss-flex-dat
