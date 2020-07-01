@@ -5,12 +5,12 @@ const knex = require('knex')(require('../knexfile').development);
 
 passport.serializeUser((user, done) => {
     console.log("Serialize");
-    done(null, user._single.insert);
+    done(null, user);
 });
 
-passport.deserializeUser(async (id, done) => {
+passport.deserializeUser(async (user, done) => {
     console.log("De Serialize");
-    knex('users').where({id}).first()
+    knex('users').where({discord_ID: user.discord_ID}).first()
         .then((user) => { done(null, user); })
         .catch((err) => { done(err,null); });
 });
@@ -32,8 +32,9 @@ passport.use(new DiscordStrategy({
     knex(tableNames.user).where({ discord_ID: profile.id }).first()
     .then((user) => { 
         if(!user) {
-            console.log("Create User!")
-            var newuser = knex(tableNames.user).insert({ discord_ID: profile.id }).returning('*');
+            var newuser = knex(tableNames.user).insert({ discord_ID: profile.id, name: profile.username }).catch(function(e) {
+                done(false,e);
+            });
             return done(null, newuser);
         }
         done(null, user); 
