@@ -23,10 +23,10 @@ test_gulp:
     - ./bin/install.sh
     - npm run build
 
-test_mocha:
-  script:
-    - ./bin/install.sh
-    - npm run test
+# test_mocha:
+#   script:
+#     - ./bin/install.sh
+#     - npm run test
 
 # test_async:
 #   script:
