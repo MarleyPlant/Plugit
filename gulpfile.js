@@ -5,7 +5,9 @@ var gulp        = require('gulp'),
     prefix      = require('gulp-autoprefixer'),
     plumber     = require('gulp-plumber'),
     sassLint    = require('gulp-sass-lint'),
-    sourcemaps  = require('gulp-sourcemaps');
+    sourcemaps  = require('gulp-sourcemaps'),
+    glob    = require('gulp-sass-glob');
+
 
 var buildpath = "./public"
 
@@ -21,9 +23,10 @@ var prefixerOptions = {
 // ---------------
 
 function compileStyles() {
-  return gulp.src(buildpath + '/scss/main.scss')
+  return gulp.src(buildpath + '/scss/*.scss')
     .pipe(plumber())
     .pipe(sourcemaps.init())
+    .pipe(glob())
     .pipe(sass(sassOptions))
     .pipe(prefix(prefixerOptions))
     .pipe(rename('main.css'))
