@@ -15,6 +15,7 @@ We are using Discord.JS, Express, Postgres and Knex.JS to implement a discord bo
 - [ ] Discord.JS Bot Can Read Plugins.
 - [ ] Discord.JS Bot Can Accept Commands.
 
+You can add the bot to your server [HERE](https://discord.com/oauth2/authorize?client_id=355715029296742403&scope=bot&permissions=8)
 
 ## Database
 The database will be using Postgres and Knex.JS.

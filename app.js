@@ -6,12 +6,11 @@ var logger = require('morgan');
 var passport = require('passport');
 var session = require('express-session');
 var knex = require('knex')(require('./knexfile').development);
-
+var bot = require('./bot.js');
 var discordStrategy = require('./passport/discord');
 var indexRouter = require('./routes/index');
 var dashboardRouter = require('./routes/dashboard');
 var authRouter = require('./routes/auth');
-
 
 var app = express();
 

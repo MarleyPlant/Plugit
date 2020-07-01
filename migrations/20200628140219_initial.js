@@ -16,7 +16,6 @@ exports.up = async (knex) => {
 
   await knex.schema.createTable(tableNames.server, (table) => {
     table.increments().notNullable();
-    table.integer('user_ID').unsigned().references(tableNames.user + 'id');
     table.text('name').notNullable();
     table.int( 'discord_ID').notNullable().unique();
     table.text('directory').unique();

@@ -4,9 +4,11 @@
   "private": false,
   "scripts": {
     "start": "node bin/www",
+    "bot": "node bot.js",
     "test": "mocha",
     "build": "gulp",
-    "migrate": "knex migrate:latest"
+    "migrate": "knex migrate:latest",
+    "migrate:down": "knex migrate:down"
   },
   "dependencies": {
     "bootstrap": "^4.5.0",

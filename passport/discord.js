@@ -1,7 +1,11 @@
 const DiscordStrategy = require('passport-discord').Strategy;
+const { Client, Permissions } = require('discord.js');
 const tableNames = require('../constants/tableNames');
 const passport = require('passport');
+const { json } = require('express');
 const knex = require('knex')(require('../knexfile').development);
+
+const client = new Client();
 
 passport.serializeUser((user, done) => {
     console.log("Serialize");
@@ -9,7 +13,6 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (user, done) => {
-    console.log("De Serialize");
     knex('users').where({discord_ID: user.discord_ID}).first()
         .then((user) => { done(null, user); })
         .catch((err) => { done(err,null); });
@@ -23,6 +26,21 @@ function isEmpty(obj) {
     return true;
 }
 
+function get_guilds(profile) {
+    var guildsToDB = [];
+    for(let guild of profile.guilds) {
+
+        // Check If The User Has All Permissions On The Server
+        const permissions = new Permissions(guild.permissions);
+
+        if(permissions.has('ADMINISTRATOR')) {
+            guildsToDB.push(guild.id);
+        }
+    }
+
+    return JSON.stringify(guildsToDB);
+}
+
 passport.use(new DiscordStrategy({
     clientID: '355715029296742403',
     clientSecret: 'HvMRdrUlAHulfRL8JO-DEFvdErhCw17M',
@@ -32,11 +50,22 @@ passport.use(new DiscordStrategy({
     knex(tableNames.user).where({ discord_ID: profile.id }).first()
     .then((user) => { 
         if(!user) {
-            var newuser = knex(tableNames.user).insert({ discord_ID: profile.id, name: profile.username }).catch(function(e) {
+            var newuser = knex(tableNames.user).insert({ discord_ID: profile.id, name: profile.username, guilds: get_guilds(profile) })
+            .catch(function(e) {
                 done(false,e);
             });
+
+            knex(tableNames.server)
+                .where({ discord_ID: profile.id })
+                .update({ guilds: get_guilds(profile) }, ['id', 'guilds'])
+                .catch(function(e) {
+                    done(false,e);
+                });
+
             return done(null, newuser);
         }
+
+
         done(null, user); 
     })
     .catch((err) => { console.log(err); });
