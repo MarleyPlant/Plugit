@@ -8,11 +8,9 @@ function addDefaultColumns(table) {
 exports.up = async (knex) => {
   await knex.schema.createTable(tableNames.user, (table) => {
     table.increments().notNullable();
-    table.string('email', 254).notNullable().unique();
-    table.text('name').notNullable();
-    table.text('discord_ID').notNullable.unique();
-    table.string('password', 500).notNullable();
-    table.dateTime('last_login').notNullable();
+    table.text('name');
+    table.text('discord_ID').notNullable().unique();
+    table.dateTime('last_login');
     addDefaultColumns(table);
   });
 
