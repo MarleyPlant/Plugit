@@ -1,3 +1,11 @@
-body {
-    background: red;
-}
+@import 'variable/breakpoints';
+@import 'variable/colors';
+@import 'variable/functions/color-mapping';
+@import 'variable/typography';
+@import 'variable/mixin';
+@import 'variable/functions';
+
+@import 'base/all';
+@import 'realm/header';
+@import 'realm/content';
+@import 'realm/footer';

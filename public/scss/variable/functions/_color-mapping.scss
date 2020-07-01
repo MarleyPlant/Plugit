@@ -1,0 +1,206 @@
+// A convenient way to use colours both from _color and styleconfig.json
+//
+// You pretty much just do:
+// $colors: add-color(nameOfYourColor, #fff);
+//
+// A pointer can be set to an existing color like:
+// $colors: add-color(anotherColorName, nameOfYourColor);
+//
+// You can add a load of colors with a map:
+// $colors: add-colors((
+//   one: #111,
+//   two: #222,
+//   three: #333,
+//   mix:
+// ));
+//
+// Once a color has been added to $colors, its value can't be changed
+//
+// To use a color, you have to:
+// background-color: color(nameOfYourColor);
+// color: c(anotherColorName);
+
+
+$color-variations: (
+  darkest: (shade, 50%),
+  darker: (shade, 25%),
+  dark: (shade, 10%),
+  light: (tint, 10%),
+  lighter: (tint, 25%),
+  lightest: (tint, 50%),
+  saturate: (saturate, 10%),
+  saturater: (saturate, 25%),
+  saturatest: (saturate, 50%),
+  desaturate: (desaturate, 10%),
+  desaturater: (desaturate, 25%),
+  desaturatest: (desaturate, 50%),
+  greyscale: grayscale,
+  inverse: invert,
+  complement: complement,
+  transparent10: (transparentize, .9),
+  transparent20: (transparentize, .8),
+  transparent30: (transparentize, .7),
+  transparent40: (transparentize, .6),
+  transparent50: (transparentize, .5),
+  transparent60: (transparentize, .4),
+  transparent70: (transparentize, .3),
+  transparent80: (transparentize, .2),
+  transparent90: (transparentize, .1),
+);
+
+$color-mixes: (
+  mix10: 90%,
+  mix20: 80%,
+  mix25: 75%,
+  mix30: 70%,
+  mix40: 60%,
+  mix: 50%,
+  mix50: 50%,
+  mix60: 40%,
+  mix70: 30%,
+  mix75: 25%,
+  mix80: 20%,
+  mix90: 10%,
+  mix100: 100%
+);
+
+
+// uses global $color-variations
+@function apply-color-variations($color) {
+  $variation-map: ();
+
+  @each $variation, $function in $color-variations {
+    $func: false;
+    $val: false;
+
+    @if type-of($function) == list {
+      $func: get-function(nth($function, 1));
+      $val: nth($function, 2);
+      $res: call($func, $color, $val);
+      $variation-map: map-merge($variation-map, ($variation: $res));
+    }
+    @if type-of($function) == string {
+      $func: get-function($function);
+      $res: call($func, $color);
+      $variation-map: map-merge($variation-map, ($variation: $res));
+    }
+  }
+
+  @return $variation-map;
+}
+
+// uses global $color-mixes
+@function apply-color-mixes($color, $mix-color) {
+  @if not $mix-color {
+    @return false;
+  }
+  $mixmap: ();
+  $func: get-function(mix);
+  @each $label, $amount in $color-mixes {
+    $val: call($func, $color, $mix-color, $amount);
+    $mixmap: map-merge($mixmap, ($label: $val));
+  }
+
+  @return $mixmap;
+}
+
+
+// creates variations + mixes
+@function create-colormap($color, $mix-color: false) {
+  $color-map: (
+    normal: $color,
+  );
+
+  $color-map: map-merge($color-map, apply-color-variations($color));
+
+  @if $mix-color != false and is-color($mix-color) {
+    $mixes: apply-color-mixes($color, $mix-color);
+    $color-map: map-merge($color-map, $mixes);
+  }
+
+  @return $color-map;
+}
+
+
+// actually gets the color out of $colors
+@function get-variant($color-map, $color, $variant: normal) {
+  $color: inspect($color);
+  $the-color: map-get($color-map, $color);
+
+  @if type-of($the-color) == null or $the-color == null {
+    @warn "`#{$color}` wasn't in $colors. Try one of `#{map-keys($color-map)}` instead.";
+    @return #f00;
+  }
+
+  // if a pointer was passed, use the pointer instead.
+  @if map-has-key($color-map, $the-color) {
+    $the-color: map-get($color-map, $the-color);
+
+    @if map-has-key($color-map, $the-color) {
+      @return get-variant($color-map, $the-color, $variant);
+    }
+  }
+
+  @if type-of($the-color) == map {
+    $val: map-get($the-color, $variant);
+    @return $val;
+  }
+
+  @error "something fucked up big time while trying to get your color.";
+  @return #f00;
+}
+
+
+// uses global $colors
+@function color($color, $variant: normal) {
+  @return get-variant($colors, $color, $variant);
+}
+
+
+// alias of color()
+@function c($color, $variant: normal) {
+  @return color($color, $variant);
+}
+
+
+// stick a new color in $colors
+@function add-color($color, $val, $mix: false) {
+  $color: inspect($color);
+
+  @if map-has-key($colors, $color) {
+    @warn "The color `#{$color}` already exists in $colors. It wasn't added again with the value `#{$val}`.";
+    @return $colors;
+  }
+
+  // set a pointer as the value for the given label
+  @if map-has-key($colors, $val) {
+    @return map-merge($colors, ($color: $val));
+  }
+
+  // set a colormap as the value for the given label
+  @return map-merge($colors, ($color: create-colormap($val, $mix)));
+}
+
+
+// for merging in a map of extra colors from _color
+@function add-colors($map-of-colors) {
+  $new-colors: ();
+
+  @each $color, $val in $map-of-colors {
+    $color: inspect($color);
+
+    @if map-has-key($colors, $color) {
+      @warn "The color `#{$color}` already exists in $colors. It wasn't added again with the value `#{$val}`.";
+      @return $colors;
+    }
+
+    @if map-has-key($colors, $val) {
+      $new-colors: map-merge($new-colors, ($color: $val));
+    }
+    @else {
+      $new-colors: map-merge($new-colors, ($color: create-colormap($val))); // @todo: add mix colors
+    }
+  }
+
+  @return map-merge($colors, $new-colors);
+}
