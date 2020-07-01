@@ -8,12 +8,12 @@ This project is based on a GitLab [Project Template](https://docs.gitlab.com/ee/
 
 We are using Discord.JS, Express, Postgres and Knex.JS to implement a discord bot that allows users to install plugins and custom commands.
 
-- [ ] Express Server Starts
+- [x] Express Server Starts
 - [ ] Postgres Server Starts
-- [ ] User Can Login To Backend
+- [x] User Can Login To Backend
 - [ ] Discord.JS Bot Can Start/Stop
 - [ ] Discord.JS Bot Can Read Plugins.
-- [ ] Discord.JS Bot Can Accept Commands.
+- [x] Discord.JS Bot Can Accept Commands.
 
 You can add the bot to your server [HERE](https://discord.com/oauth2/authorize?client_id=355715029296742403&scope=bot&permissions=8)
 
