@@ -10,6 +10,7 @@ exports.up = async (knex) => {
     table.increments().notNullable();
     table.string('email', 254).notNullable().unique();
     table.text('name').notNullable();
+    table.text('discord_ID').notNullable.unique();
     table.string('password', 500).notNullable();
     table.dateTime('last_login').notNullable();
     addDefaultColumns(table);
