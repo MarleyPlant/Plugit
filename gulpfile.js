@@ -23,7 +23,7 @@ var prefixerOptions = {
 // ---------------
 
 function compileStyles() {
-  return gulp.src(buildpath + '/scss/*.scss')
+  return gulp.src('./scss/*.scss')
     .pipe(plumber())
     .pipe(sourcemaps.init())
     .pipe(glob())

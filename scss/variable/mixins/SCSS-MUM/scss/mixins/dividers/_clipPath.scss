@@ -1,0 +1,8 @@
+  @mixin divider-clip-path-lr() {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
+  }
+  
+  @mixin divider-clip-path-rl() {
+    clip-path: polygon(0 0, 100% 0%, 100% 89%, 0 100%);
+  }
+  

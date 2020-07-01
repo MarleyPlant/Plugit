@@ -1,0 +1,16 @@
+@import '../../flex-dat';
+
+.flex-end {
+  .flex-end {
+    @include flex-dat('flex-end center');
+  }
+  .end {
+    @include flex-dat('end center');
+  }
+  .bottom {
+    @include flex-dat('bottom center');
+  }
+  .right {
+    @include flex-dat('center right');
+  }
+}

@@ -1,0 +1,9 @@
+@import '../../flex-dat';
+
+.flow-wrap-first {
+  @include flex-dat-flow('nowrap column');
+}
+
+.flow-direction-first {
+  @include flex-dat-flow('column nowrap');
+}

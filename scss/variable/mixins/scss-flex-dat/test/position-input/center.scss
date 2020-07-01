@@ -1,0 +1,10 @@
+@import '../../flex-dat';
+
+.center {
+  .center {
+    @include flex-dat('center');
+  }
+  .middle {
+    @include flex-dat('middle');
+  }
+}

@@ -1,0 +1,13 @@
+@import '../../flex-dat';
+
+.space-between {
+  .space-between {
+    @include flex-dat('center space-between');
+  }
+  .spaced {
+    @include flex-dat('center spaced');
+  }
+  .between {
+    @include flex-dat('center between');
+  }
+}

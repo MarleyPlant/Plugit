@@ -1,0 +1,13 @@
+@import '../../flex-dat';
+
+.space-evenly {
+  .space-evenly {
+    @include flex-dat('center space-evenly');
+  }
+  .evenly {
+    @include flex-dat('center evenly');
+  }
+  .even {
+    @include flex-dat('center even');
+  }
+}

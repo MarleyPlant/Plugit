@@ -1,0 +1,205 @@
+// *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+// Validation functions
+// *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+
+//**
+//* Handles validation of the position input
+//**
+@function fd-validate-position($string) {
+  // allow for single inputs
+  @if (str-index($string, ' ') == null) {
+    $string: $string + ' ' + $string;
+  }
+
+  // make sure the inputs are valid.
+  $string-split: str-split($string, ' '); // @todo switch this split with an explode then check the length of the list is 2
+  $i-pos: 1;
+  @each $position in $string-split {
+    @if (fd-is-valid-position(nth($string-split, $i-pos)) != true) {
+      @warn 'Invalid position `#{nth($string-split, $i-pos)}` supplied to flex-dat';
+    }
+    $i-pos: $i-pos + 1;
+  }
+
+  @return $string;
+}
+
+//**
+//* Checks if the input string matches the list of valid inputs
+//**
+@function fd-is-valid-position($string) {
+  @if (index($fd-valid-positions, $string) != null) {
+    @return true;
+  }
+  @else {
+    // @error '#{$string} is not a valid input for fd-position';
+    @return false;
+  }
+}
+
+// checks whether the input string was a directional value
+@function fd-is-direction($string) {
+  @return index($fd-directions, $string) != null;
+}
+
+
+
+
+// *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+// Translation functions
+// *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+
+//**
+//* flex-dat is an scss mixin for CSS Flex. It comes with a shorthand for flex properties and sensible defaults.
+//*
+//* For information on how to use it, go to https://bitbucket.org/snippets/govinski/RBggEe/scss-flex-dat-mixin
+//*
+//* @author Govi Tusler
+//**
+
+// conversion from flex-dat shorthand to renderable flex properties
+@function fd2flex($string) {
+  @if ($string == 'top' or $string == 'start' or $string == 'left' or $string == 'flex-start') {
+    @return flex-start;
+  }
+  @if ($string == 'center' or $string == 'middle') {
+    @return center;
+  }
+  @if ($string == 'bottom' or $string == 'right' or $string == 'end' or $string == 'flex-end') {
+    @return flex-end;
+  }
+  @if ($string == 'spaced' or $string == 'between' or $string == 'space-between') {
+    @return space-between;
+  }
+  @if ($string == 'together' or $string == 'around' or $string == 'space-around') {
+    @return space-around;
+  }
+  @if ($string == 'even' or $string == 'evenly' or $string == 'space-evenly') {
+    @return space-evenly;
+  }
+  @if ($string == 'stretched' or $string == 'stretch' or $string == 'fit') {
+    @return stretch;
+  }
+
+  @return $string;
+}
+
+
+// converts from the latest flex syntax to the older form
+@function flex2oldstyle($string, $type: 'flex') {
+  @if ($string == flex-start) {
+    @return start;
+  }
+  @if ($string == center) {
+    @return center;
+  }
+  @if ($string == flex-end) {
+    @return end;
+  }
+  @if ($string == space-around) {
+    @return distribute;
+  }
+  @if ($string == space-between or $string == space-evenly) {
+    @if ($type == 'box') {
+      @return distribute;
+    }
+    @else {
+      @return justify;
+    }
+  }
+  @if ($string == stretch) {
+    @return stretch;
+  }
+
+  @return $string;
+}
+
+
+// @todo refactor this
+// converts the latest syntax for flex-direction into the older form
+@function flex-direction2oldstyle($string) {
+  $orient: '';
+  $direction: '';
+
+  $dash-index: str_index($string, '-');
+  @if ($dash-index != null) {
+    $first: str_slice($string, 1, $dash-index - 1);
+
+    @if ($first == row) {
+      $orient: horizontal;
+    }
+    @else if ($first == column) {
+      $orient: vertical;
+    }
+    $direction: str_slice($string, $dash-index + 1, -1);
+  }
+  @else {
+    @if ($string == row) {
+      $orient: horizontal;
+    }
+    @else if ($string == column) {
+      $orient: vertical;
+    }
+    $direction: normal;
+  }
+
+  $output: (orient: $orient, direction: $direction);
+  @return $output;
+}
+
+
+
+
+
+
+
+
+
+// *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+// Flex Dat functions
+// *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+
+// @todo refactor this
+// splits the $fd-flow input string into a map of the relevant data
+@function fd-flow($string) {
+  $string: unquote($string);
+  $string-space-index: str_index($string, ' ');
+
+  @if ($string-space-index == null) {
+    @if (fd-is-direction($string)) {
+      @return (direction: $string);
+    }
+    @else {
+      @return (wrap: $string);
+    }
+  }
+  @else {
+    $string-first: str_slice($string, 1, $string-space-index - 1);
+    $string-second: str_slice($string, $string-space-index +1, -1);
+
+    $direction: '';
+    $wrap: '';
+
+    @if (fd-is-direction($string-first)) {
+      @return (direction: $string-first, wrap: $string-second);
+    }
+    @if (fd-is-direction($string-second)) {
+      @return (direction: $string-second, wrap: $string-first);
+    }
+
+    @error "'#{$string}' was an invalid input for fd-flow()";
+  }
+}
+
+
+// @todo make a function for str_pos_x and a str_pos_every (should return a list of indexes)
+// splits the input $fd-position string into a list
+@function fd-position($string) {
+  $string: fd-validate-position($string);
+
+  $string-space-index: str_index($string, ' ');
+  $string-first: str_slice($string, 1, $string-space-index - 1);
+  $string-second: str_slice($string, $string-space-index + 1, -1);
+
+  @return (fd2flex($string-first), fd2flex($string-second));
+}

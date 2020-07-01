@@ -1,0 +1,4 @@
+@function str-split($str, $del: ' ') {
+  $i-del: str-index($str, $del);
+  @return (str-slice($str, 1, $i-del - 1), str-slice($str, $i-del + 1));
+}

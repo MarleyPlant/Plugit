@@ -1,0 +1,13 @@
+@import '../../flex-dat';
+
+.stretch {
+  .stretch {
+    @include flex-dat('stretch center');
+  }
+  .fit {
+    @include flex-dat('fit center');
+  }
+  .stretched {
+    @include flex-dat('stretched center');
+  }
+}

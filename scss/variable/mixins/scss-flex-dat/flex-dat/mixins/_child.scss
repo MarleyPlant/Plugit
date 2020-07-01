@@ -1,0 +1,52 @@
+//**
+//* $width bool|int If $width is a number, the width will be set to that number. If $width is true, width will be set to $basis. If width is false, no width will be set.
+//**
+@mixin flex($grow, $shrink, $basis, $width: false) {
+  @if ($width != false) {
+    @if ($width == true) {
+      width: $basis;
+    }
+    @else {
+      width: $width;
+    }
+  }
+  -webkit-box-flex: $grow;
+  -webkit-flex: $grow $shrink $basis;
+  -ms-flex: $grow $shrink $basis;
+  flex: $grow $shrink $basis;
+}
+
+
+@mixin flex-grow($grow) {
+  -webkit-box-flex: $grow;
+  -webkit-flex-grow: $grow;
+  -ms-flex-positive: $grow;
+  flex-grow: $grow;
+}
+
+@mixin flex-shrink($shrink) {
+  -webkit-flex-shrink: $shrink;
+  -ms-flex-shrink: $shrink;
+  flex-shrink: $shrink;
+}
+
+@mixin flex-basis($basis) {
+  -webkit-flex-basis: $basis;
+  -ms-flex-preferred-size: $basis;
+  flex-basis: $basis;
+}
+
+@mixin order($order) {
+  -webkit-box-ordinal-group: $order + 1;
+  -webkit-order: $order;
+  -ms-flex-order: $order;
+  order: $order;
+}
+
+@mixin align-self($fd-alignment) {
+  $alignment: fd2flex($fd-alignment);
+
+  -webkit-align-self: $alignment;
+  -ms-flex-item-align: $alignment;
+  align-self: $alignment;
+}

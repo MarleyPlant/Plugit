@@ -1,0 +1,22 @@
+@mixin bg-transparent($url, $color, $opacity) {
+    background: /* top, transparent red, faked with gradient */
+      linear-gradient(
+          rgba($color, $opacity),
+          rgba($color, $opacity)
+      ),
+        /* bottom, image */
+      url($url) no-repeat center center fixed;
+  
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src=$url, sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=$url, sizingMethod='scale')";
+  }
+  
+  // @todo: This doesn't look functional to me. Maybe the properties should be in the other order?
+  @mixin remove-tap-highlight() {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-tap-highlight-color: transparent; // i.e. Nexus5/Chrome and Kindle Fire HD 7''
+  }
