@@ -7,7 +7,7 @@ var passport = require('passport');
 var session = require('express-session');
 var knex = require('knex')(require('./knexfile').development);
 
-var discordStrategy = require('./strategies/discord');
+var discordStrategy = require('./passport/discord');
 var indexRouter = require('./routes/index');
 var dashboardRouter = require('./routes/dashboard');
 var authRouter = require('./routes/auth');
