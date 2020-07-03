@@ -9751,6 +9751,10 @@ a.text-dark:hover, a.text-dark:focus {
   color: white;
 }
 
+.navbar-brand {
+  font-size: 2.25rem;
+}
+
 .footer {
   max-height: 10vh;
 }

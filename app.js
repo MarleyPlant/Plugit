@@ -10,6 +10,8 @@ var discordStrategy = require('./passport/discord');
 var indexRouter = require('./routes/index');
 var dashboardRouter = require('./routes/dashboard');
 var authRouter = require('./routes/auth');
+var serverRouter = require('./routes/server');
+
 
 var app = express();
 
@@ -36,8 +38,11 @@ app.use(passport.session());
 
 
 app.use('/', indexRouter);
-app.use('/dashboard', dashboardRouter);
 app.use('/auth', authRouter);
+app.use('/dashboard', dashboardRouter);
+app.use('/server', serverRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
