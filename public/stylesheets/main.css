@@ -9762,10 +9762,9 @@ a.text-dark:hover, a.text-dark:focus {
 #index .container-fluid, #index .container-sm, #index .container-md, #index .container-lg, #index .container-xl {
   display: -ms-flex;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   min-height: 100vh;
 }
 
@@ -9776,4 +9775,31 @@ a.text-dark:hover, a.text-dark:focus {
 #index .container-fluid .title, #index .container-sm .title, #index .container-md .title, #index .container-lg .title, #index .container-xl .title {
   padding-bottom: 16px;
   color: white;
+}
+
+#dashboard .content {
+  min-height: 85vh;
+  display: -ms-flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+#dashboard .content .server {
+  display: -ms-flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+  padding: 1rem;
+}
+
+#dashboard .add-server {
+  display: -ms-flex;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }

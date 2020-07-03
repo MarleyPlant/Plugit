@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  main#dashboard
+    include navbar
+    #content.content.container-fluid
+        .server.card
+            .card-body
+                h2.card-title Server 1
+                p.card-text An Example Server Description
+                a(href='').card-link Settings
+        .server.card
+            .card-body
+                h2.card-title Server 2
+                p.card-text An Example Server Description
+                a(href='').card-link Settings
+        .server.card
+            .card-body
+                h2.card-title Server 3
+                p.card-text An Example Server Description
+                a(href='').card-link Settings
+
+    .add-server
+        button.btn.btn-primary.btn-lg + Add Server

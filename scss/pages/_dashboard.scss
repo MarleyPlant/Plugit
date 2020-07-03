@@ -1,0 +1,21 @@
+#dashboard {
+    .content {
+        min-height: 85vh;
+        @include flex-dat('top', 'row');
+        .server {
+            @include flex-dat('center', 'column');
+            margin: 2rem;
+            padding: 1rem;
+
+            &-title {
+
+            }
+
+
+        }   
+    }
+
+    .add-server {
+        @include flex-dat('center');
+    }
+}
