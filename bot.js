@@ -84,4 +84,4 @@ client.on('message', (msg) => {
 });  
 
 console.log("———————— Plugit! ————————");
-client.login(process.env.token);
+client.login(process.env.TOKEN);

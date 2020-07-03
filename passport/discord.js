@@ -42,8 +42,8 @@ function get_guilds(profile) {
 }
 
 passport.use(new DiscordStrategy({
-    clientID: '355715029296742403',
-    clientSecret: 'HvMRdrUlAHulfRL8JO-DEFvdErhCw17M',
+    clientID: process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     callbackURL: process.env.CLIENT_REDIRECT,
     scope: ['identify', 'guilds']
 }, (accessToken, refreshToken, profile, done) => {
