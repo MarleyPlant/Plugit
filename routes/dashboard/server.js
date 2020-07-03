@@ -4,7 +4,7 @@ var passport = require('passport');
 
 
 router.get('/', function(req, res, next) {
-    res.render('server');
+    res.redirect('/dashboard');
   });
 
   router.get('/server1', function(req, res, next) {
