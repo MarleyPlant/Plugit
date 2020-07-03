@@ -1,17 +1,27 @@
 #dashboard {
     .content {
-        min-height: 85vh;
+        @include breakpoint( max-height 600px ) {
+            min-height: 70vh;
+        }
+
+        @include breakpoint( min-height 600px ) {
+            min-height: 75vh;
+        }
+
+        @include breakpoint( min-height 700px ) {
+            min-height: 80vh;
+        }
+
+        @include breakpoint( min-height 900px ) {
+            min-height: 85vh;
+        }
+
         @include flex-dat('top', 'row');
         .server {
             @include flex-dat('center', 'column');
+            border-color: #7289da;
             margin: 2rem;
             padding: 1rem;
-
-            &-title {
-
-            }
-
-
         }   
     }
 

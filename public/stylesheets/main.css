@@ -9747,12 +9747,31 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
+.btn-primary {
+  background-color: #7289da;
+  border-color: #7289da;
+}
+
+.btn-primary:hover {
+  background-color: #7289da;
+  border-color: #7289da;
+}
+
+.card-title {
+  color: #7289da;
+}
+
 .colorSchemeWhite-33VuSr .link-oDO0Ir, .colorSchemeWhite-33VuSr .logo-3LF899, .colorSchemeWhite-33VuSr .menuIcon-3UgAfy {
   color: white;
 }
 
 .navbar-brand {
   font-size: 2.25rem;
+  color: white !important;
+}
+
+.navbar {
+  background-color: #7289da !important;
 }
 
 .footer {
@@ -9782,12 +9801,35 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 #dashboard .content {
-  min-height: 85vh;
   display: -ms-flex;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;
+}
+
+@media (max-height: 600px) {
+  #dashboard .content {
+    min-height: 70vh;
+  }
+}
+
+@media (min-height: 600px) {
+  #dashboard .content {
+    min-height: 75vh;
+  }
+}
+
+@media (min-height: 700px) {
+  #dashboard .content {
+    min-height: 80vh;
+  }
+}
+
+@media (min-height: 900px) {
+  #dashboard .content {
+    min-height: 85vh;
+  }
 }
 
 #dashboard .content .server {
@@ -9796,6 +9838,7 @@ a.text-dark:hover, a.text-dark:focus {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-color: #7289da;
   margin: 2rem;
   padding: 1rem;
 }

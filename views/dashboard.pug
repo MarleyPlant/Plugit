@@ -8,17 +8,22 @@ block content
             .card-body
                 h2.card-title Server 1
                 p.card-text An Example Server Description
-                a(href='/dashboard/server/server1').card-link Settings
+                a(href='/dashboard/server/server1').card-link
+                    button.btn.btn-primary Settings
         .server.card
             .card-body
                 h2.card-title Server 2
                 p.card-text An Example Server Description
-                a(href='/dashboard/server/server2').card-link Settings
+                a(href='/dashboard/server/server2').card-link
+                    button.btn.btn-primary Settings
+                   
         .server.card
             .card-body
                 h2.card-title Server 3
                 p.card-text An Example Server Description
-                a(href='/dashboard/server/server3').card-link Settings
+                a(href='/dashboard/server/server3').card-link
+                    button.btn.btn-primary Settings
 
     .add-server
-        button.btn.btn-primary.btn-lg + Add Server
+        a(href='https://discord.com/oauth2/authorize?client_id=355715029296742403&scope=bot&permissions=8')
+            button.btn.btn-primary.btn-lg + Add Server
