@@ -27,5 +27,8 @@
 
     .add-server {
         @include flex-dat('center');
+        &-text {
+            text-transform: capitalize;
+        }
     }
 }
