@@ -8,7 +8,9 @@ var session = require('express-session');
 var knex = require('knex')(require('./knexfile').development);
 var discordStrategy = require('./passport/discord');
 var indexRouter = require('./routes/index');
-var dashboardRouter = require('./routes/dashboard/');
+var settingsRouter = require('./routes/settings');
+var serverRouter = require('./routes/server');
+
 var authRouter = require('./routes/auth');
 
 
@@ -38,8 +40,8 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
-app.use('/dashboard', dashboardRouter);
-
+app.use('/server', serverRouter);
+app.use('/settings', settingsRouter);
 
 
 // catch 404 and forward to error handler

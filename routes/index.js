@@ -3,7 +3,27 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  if (!req.user) {
+    res.render('index', { title: 'Express' });
+  } else {
+    knex('servers')
+    .then((servers) => {
+      knex('users').where({id: 1}).first()
+      .then((user) => { 
+        servers_to_render = [];
+        guilds = JSON.parse(user.guilds);
+        for (let server of servers) {
+          if (guilds.includes(server.discord_ID)) {
+            servers_to_render.push(server);
+          }
+        }
+        res.render('dashboard', { servers: servers_to_render });
+       })
+      .catch((err) => { console.log(err) });
+    
+     })
+    .catch((err) => { console.log(err) });
+  }
 });
 
 module.exports = router;
