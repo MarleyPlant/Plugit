@@ -1,7 +1,12 @@
 extends layout
 
 block content
-  main#dashboard
+  main#dashboard.settings
     include includes/navbar
-    #content.content.container-fluid
-
+    #content.content.container
+      .col
+        .container-fluid
+          h2 Links
+      .col
+        .container-fluid
+          h2 Properties

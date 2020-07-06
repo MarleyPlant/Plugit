@@ -15906,3 +15906,15 @@ a.text-dark:hover, a.text-dark:focus {
 #dashboard .add-server-text {
   text-transform: capitalize;
 }
+
+.settings .content .col {
+  align-self: center;
+}
+
+.settings .content .col .container-fluid, .settings .content .col .container-sm, .settings .content .col .container-md, .settings .content .col .container-lg, .settings .content .col .container-xl {
+  display: -ms-flex;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

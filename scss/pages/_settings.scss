@@ -1,0 +1,10 @@
+.settings {
+    .content {
+        .col {
+            align-self: center;
+            .container-fluid {
+                @include flex-dat('center', 'column');
+            }
+        }
+    }
+}
