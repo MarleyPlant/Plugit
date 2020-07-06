@@ -6,6 +6,4 @@ function isAuth(req, res, next) {
     }
   }
 
-  module.exports = {
-      isAuth: isAuth
-  };
+  module.exports = isAuth;
