@@ -4,7 +4,9 @@ var passport = require('passport');
 
 
 router.get('/', function(req, res, next) {
-res.render('settings');
+res.render('settings', {
+    title: 'Plugit - Settings'
+});
 });
 
 module.exports = router;

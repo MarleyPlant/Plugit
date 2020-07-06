@@ -4,7 +4,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   if (!req.user) {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Plugit - Sign In!' });
   } else {
     knex('servers')
     .then((servers) => {
@@ -17,7 +17,10 @@ router.get('/', function(req, res, next) {
             servers_to_render.push(server);
           }
         }
-        res.render('dashboard', { servers: servers_to_render });
+        res.render('dashboard', { 
+          servers: servers_to_render,
+          title: 'Plugit - Dashbaord'
+        });
        })
       .catch((err) => { console.log(err) });
     
