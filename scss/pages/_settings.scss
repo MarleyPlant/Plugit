@@ -5,6 +5,9 @@
             .container-fluid {
                 @include flex-dat('center', 'column');
             }
+
+            .settings-properties {
+            }
         }
     }
 }
