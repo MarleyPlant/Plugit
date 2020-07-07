@@ -62,3 +62,4 @@ typings/
 
 *.sqlite3
 *.css
+public/stylesheets/
