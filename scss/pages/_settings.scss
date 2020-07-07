@@ -1,7 +1,7 @@
 .settings {
     .content {
         .col {
-            align-self: center;
+            padding-top: 10rem;
             .container-fluid {
                 @include flex-dat('center', 'column');
             }

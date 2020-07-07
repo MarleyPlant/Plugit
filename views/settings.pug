@@ -6,7 +6,41 @@ block content
     #content.content.container
       .col
         .container-fluid
-          h2 Links
+          h2 Settings
+          br
+          .btn-group-vertical
+            button.btn.btn-primary.btn-lg.active
+              i.fas.fa-cog
+              span  General Settings
+            button.btn.btn-primary.btn-lg 
+              i.fas.fa-plug
+              span  Plugin Manager
+            button.btn.btn-primary.btn-lg 
+              i.fas.fa-globe
+              span  Connection Settings
+            button.btn.btn-primary.btn-lg 
+              i.fas.fa-spinner
+              span  These Should Be Generated Based on installed modules..
+
       .col
         .container-fluid
-          h2 Properties
+          h2
+            i.fas.fa-cog
+            span  General Settings
+          br
+          .div.input-group.mb-3
+            .div.input-group-prepend
+              span.input-group-text Command Prefix
+            .input(type='text').form-control !
+            .div.input-group-append
+              span.input-group-text "Example Command From Bot."
+          .div.input-group.mb-3
+            .div.input-group-prepend
+              span.input-group-text User Welcome Message
+            .input(type='text').form-control 
+          .btn-group
+            button.btn.btn-large.btn-success Start
+            button.btn.btn-large.btn-danger Stop
+
+
+
