@@ -9,19 +9,15 @@ block content
           h2 Settings
           br
           .btn-group-vertical
-            button.btn.btn-primary.btn-lg.active
-              i.fas.fa-cog
-              span  General Settings
-            button.btn.btn-primary.btn-lg 
-              i.fas.fa-plug
-              span  Plugin Manager
-            button.btn.btn-primary.btn-lg 
-              i.fas.fa-globe
-              span  Connection Settings
-            button.btn.btn-primary.btn-lg 
-              i.fas.fa-spinner
-              span  These Should Be Generated Based on installed modules..
-
+            each setting, i in settings
+              if setting.active
+                button.btn.btn-primary.btn-lg.active
+                  i.fas(class='fa-' + setting.icon)
+                  span= "  " + setting.name
+              else
+                button.btn.btn-primary.btn-lg 
+                  i.fas(class='fa-' + setting.icon)
+                  span= "  " + setting.name
       .col
         .container-fluid.settings-properties
           h2
