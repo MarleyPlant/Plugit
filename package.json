@@ -11,6 +11,7 @@
     "migrate:down": "knex migrate:down"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "archy": "^1.0.0",
     "bootstrap": "^4.5.0",
     "breakpoint-sass": "^2.7.1",

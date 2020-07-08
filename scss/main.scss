@@ -1,3 +1,8 @@
+@import '../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '../node_modules/@fortawesome/fontawesome-free/scss/regular.scss';
+@import '../node_modules/@fortawesome/fontawesome-free/scss/solid.scss';
+@import '../node_modules/@fortawesome/fontawesome-free/scss/brands.scss';
+
 @import "bootstrap/scss/bootstrap";
 @import 'variable/vars';
 @import 'variable/breakpoints';
@@ -13,3 +18,5 @@
 @import 'realm/footer';
 
 @import 'pages/index';
+@import 'pages/dashboard';
+@import 'pages/settings';

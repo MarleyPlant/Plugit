@@ -4,7 +4,7 @@ const tableNames = require('../constants/tableNames');
 const passport = require('passport');
 const { json } = require('express');
 const knex = require('knex')(require('../knexfile').development);
-
+const isEmpty = require('../helpers/isEmpty');
 const client = new Client();
 
 passport.serializeUser((user, done) => {
@@ -17,14 +17,6 @@ passport.deserializeUser(async (user, done) => {
         .then((user) => { done(null, user); })
         .catch((err) => { done(err,null); });
 });
-
-function isEmpty(obj) {
-    for(var key in obj) {
-        if(obj.hasOwnProperty(key))
-            return false;
-    }
-    return true;
-}
 
 function get_guilds(profile) {
     var guildsToDB = [];
@@ -51,6 +43,9 @@ passport.use(new DiscordStrategy({
     .then((user) => { 
         if(!user) {
             var newuser = knex(tableNames.user).insert({ discord_ID: profile.id, name: profile.username, guilds: get_guilds(profile) })
+            .then((user) => {
+                done(null, user)
+            })
             .catch(function(e) {
                 done(false,e);
             });
