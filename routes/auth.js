@@ -6,6 +6,15 @@ var isAuth = require('../helpers/isAuth');
 
 router.get('/', isAuth, passport.authenticate('discord'));
 
+router.get('/logout', (req, res) => {
+  if(req.user) {
+    req.logout();
+    res.redirect('/');
+  } else {
+    res.redirect('/');
+  }
+})
+
 /* GET auth listing. */
 router.get('/redirect', isAuth, passport.authenticate('discord' , {
   failureRedirect: '/forbidden'

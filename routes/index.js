@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
   } else {
     knex('servers')
     .then((servers) => {
-      knex('users').where({id: 1}).first()
+      knex('users').where({id: req.user.id}).first()
       .then((user) => { 
         servers_to_render = [];
         guilds = JSON.parse(user.guilds);
