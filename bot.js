@@ -63,7 +63,16 @@ client.on("guildCreate", async (guild) => {
   var newuser = knex(tableNames.server)
     .insert({ discord_ID: guild.id, name: guild.name })
     .catch(function (e) {
-      done(false, e);
+      console.log(e);
+    });
+});
+
+client.on("guildUpdate", async (guild) => {
+  knex(tableNames.server)
+    .where({ discord_ID: guild.id })
+    .update({ name: guild.name }, ['id', 'name'])
+    .catch(function(e) {
+        console.log(e);
     });
 });
 
