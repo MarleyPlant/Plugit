@@ -42,11 +42,13 @@ passport.use(new DiscordStrategy({
     knex(tableNames.user).where({ discord_ID: profile.id }).first()
     .then((user) => { 
         if(!user) {
+            console.log("Not User")
             var newuser = knex(tableNames.user).insert({ discord_ID: profile.id, name: profile.username, guilds: get_guilds(profile) })
             .then((user) => {
                 done(null, user)
             })
             .catch(function(e) {
+                console.log(e);
                 done(false,e);
             });
 

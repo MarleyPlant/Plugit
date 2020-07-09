@@ -13,6 +13,7 @@ router.get('/', function(req, res, next) {
       .then((user) => { 
         servers_to_render = [];
         guilds = JSON.parse(user.guilds);
+
         for (let server of servers) {
           if (guilds.includes(server.discord_ID)) {
             servers_to_render.push(server);

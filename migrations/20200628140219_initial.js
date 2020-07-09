@@ -10,6 +10,7 @@ exports.up = async (knex) => {
     table.increments().notNullable();
     table.text('name');
     table.text('discord_ID').notNullable().unique();
+    table.text('guilds').notNullable();
     table.dateTime('last_login');
     addDefaultColumns(table);
   });
@@ -17,7 +18,7 @@ exports.up = async (knex) => {
   await knex.schema.createTable(tableNames.server, (table) => {
     table.increments().notNullable();
     table.text('name').notNullable();
-    table.int( 'discord_ID').notNullable().unique();
+    table.text( 'discord_ID').notNullable().unique();
     table.text('directory').unique();
     addDefaultColumns(table);
   });
