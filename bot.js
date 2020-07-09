@@ -8,6 +8,24 @@ const util = require("./util");
 const client = new Client();
 const pluginManager = new util.pluginManager(__dirname + "/modules/");
 
+function updateServer(guild) {
+  knex(tableNames.server)
+    .where({ discord_ID: guild.id })
+    .update({ name: guild.name, memberCount: guild.memberCount }, ['id', 'name', 'memberCount'])
+    .catch(function (e) {
+      console.log(e);
+    });
+}
+
+function createServer(guild) {
+  knex(tableNames.server)
+    .insert({ discord_ID: guild.id, name: guild.name, memberCount: guild.memberCount })
+    .catch(function (e) {
+      console.log(e);
+    });
+}
+
+
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
   console.log(
@@ -60,20 +78,21 @@ pluginManager.addCommand({
 });
 
 client.on("guildCreate", async (guild) => {
-  var newuser = knex(tableNames.server)
-    .insert({ discord_ID: guild.id, name: guild.name })
-    .catch(function (e) {
-      console.log(e);
-    });
+  createServer(guild);
 });
 
 client.on("guildUpdate", async (guild) => {
   knex(tableNames.server)
-    .where({ discord_ID: guild.id })
-    .update({ name: guild.name }, ['id', 'name'])
-    .catch(function(e) {
-        console.log(e);
-    });
+  .where({ discord_ID: guild.id })
+  .first()
+  .then((server) => {
+    if(!server) {
+      createServer(guild);
+    }
+    else { 
+      updateServer(guild);
+    }
+  })
 });
 
 //Handle commands

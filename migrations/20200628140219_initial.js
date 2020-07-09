@@ -20,6 +20,7 @@ exports.up = async (knex) => {
     table.text('name').notNullable();
     table.text( 'discord_ID').notNullable().unique();
     table.text('directory').unique();
+    table.int('memberCount').notNullable();
     addDefaultColumns(table);
   });
 };
