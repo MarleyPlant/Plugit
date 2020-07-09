@@ -11,7 +11,7 @@ const pluginManager = new util.pluginManager(__dirname + "/modules/");
 function updateServer(guild) {
   knex(tableNames.server)
     .where({ discord_ID: guild.id })
-    .update({ name: guild.name, memberCount: guild.memberCount }, ['id', 'name', 'memberCount'])
+    .update({ name: guild.name, memberCount: guild.memberCount, icon: guild.iconURL() }, ['id', 'name', 'memberCount', 'icon'])
     .catch(function (e) {
       console.log(e);
     });
@@ -19,7 +19,7 @@ function updateServer(guild) {
 
 function createServer(guild) {
   knex(tableNames.server)
-    .insert({ discord_ID: guild.id, name: guild.name, memberCount: guild.memberCount })
+    .insert({ name: guild.name, discord_ID: guild.id, memberCount: guild.memberCount, icon: guild.iconURL() })
     .catch(function (e) {
       console.log(e);
     });
