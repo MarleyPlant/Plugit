@@ -7,8 +7,11 @@ block content
         each server, i in servers
                 .server.card
                     .card-body
+                        img.card-img(src=server.icon)
+                        br
+                        br
                         h2.card-title= server.name
-                        p.card-text Total Members 
+                        p.card-text Total Members: 
                             b= server.memberCount
                         a(href='/server/' + server.discord_ID).card-link
                             button.btn.btn-primary 

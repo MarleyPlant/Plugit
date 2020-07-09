@@ -19,9 +19,14 @@
         @include flex-dat('top', 'row');
         .server {
             @include flex-dat('center', 'column');
-            border-color: #202536;
+            border-color: #7289da;
             margin: 2rem;
             padding: 1rem;
+            .card-img {
+                border-radius: 50% !important;
+                width: 5rem;
+                border: 2px solid #7289da;
+            }
         }   
     }
 
