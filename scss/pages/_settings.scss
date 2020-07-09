@@ -1,7 +1,6 @@
 .settings {
     .content {
         .col {
-            padding-top: 10rem;
             .container-fluid {
                 @include flex-dat('center', 'column');
             }
