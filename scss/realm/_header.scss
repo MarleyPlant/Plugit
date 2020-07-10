@@ -9,4 +9,12 @@
 
 .navbar {
     background-color: #7289da !important;
+
+    a {
+        span {
+            @include breakpoint(max-width $content-shrink-md) {
+                display: none;
+            }
+        }
+    }
 }
