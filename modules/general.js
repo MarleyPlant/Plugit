@@ -4,7 +4,10 @@ module.exports = {
   commands: {
     clear: {
       name: "clear",
-      parameters: "(number)",
+      parameters: {
+        params: "(number)",
+        required: false,
+      },
       help: "clear messages from the chat.",
       main: function(bot, db, msg) {
         args = util.args.parse(msg);
@@ -19,17 +22,24 @@ module.exports = {
     stats: {
       name: "stats",
       help: "Display statistics for the bot instance." ,
+      parameters: {
+        params: "",
+        required: false,
+      },
       main: function(bot, db, msg) {
         guilds = bot.guilds.cache.array()
 
         msg.channel.send(`I am currently connected to and serving ${guilds.length} guilds`)
       }
-    },
+    },  
 
-    softban: {
-      name: "!banned",
+    banned: {
+      name: "banned",
       help: "Displays A List Of Banned Users.",
-      parameters: "(user)",
+      parameters: {
+        params: "(user)",
+        required: true,
+      },
       main: function(bot, db, msg) {
 
       }

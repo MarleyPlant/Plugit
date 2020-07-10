@@ -53,6 +53,10 @@ client.on("ready", () => {
 pluginManager.addCommand({
   name: "help",
   help: "Display A List of commands And Their Features!",
+  parameters: {
+    params: "",
+    required: false,
+  },
   main: function (bot, knex, msg) {
     embed = new MessageEmbed().setTitle("Bot commands");
     for (command in pluginManager.commands) {
@@ -61,7 +65,7 @@ pluginManager.addCommand({
           process.env.prefix +
             pluginManager.commands[command].name +
             " " +
-            pluginManager.commands[command].parameters,
+            pluginManager.commands[command].parameters.params,
           pluginManager.commands[command].help,
           true
         );
@@ -100,9 +104,20 @@ client.on('message', (msg) => {
     if ( msg.author.bot ) return //If message is from a bot ignore.
     if ( msg.content.indexOf(process.env.prefix) !== -1 ) {
       var command = msg.content.split(process.env.prefix)[1].split(" ")[0];
+      var args = util.args.parse(msg);
       if(command in pluginManager.commands){
         if(process.env.delete_commands == true) msg.delete()
-        pluginManager.commands[command].main(client, knex, msg);
+        if (args.length == 0 && pluginManager.commands[command].parameters.required) {
+          		let reply = `You didn't provide any arguments, ${msg.author}!`;
+          
+          		if (pluginManager.commands[command].parameters.params) {
+          			reply += `\nThe proper usage would be: \`${process.env.prefix}${pluginManager.commands[command].name} ${pluginManager.commands[command].parameters.params}\``;
+          		}
+          
+              return msg.channel.send(reply);
+            } else {
+              pluginManager.commands[command].main(client, knex, msg);
+            }
       }
     }
   

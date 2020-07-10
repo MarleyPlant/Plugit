@@ -9,6 +9,7 @@ block content
                     .card-body
                         img.card-img(src=server.icon)
                         br
+                        br
                         h2.card-title= server.name
                         p.card-text Total Members: 
                             b= server.memberCount
@@ -19,6 +20,6 @@ block content
             
 
     .add-server
-        a(href='https://discordapp.com/oauth2/authorize?client_id=355715029296742403&scope=bot&permissions=8&redirect_uri=https%3A%2F%2Flocallhost%3A5000')
+        a(href='https://discord.com/api/oauth2/authorize?client_id=355715029296742403&permissions=0&redirect_uri=http%3A%2F%2Flocalhost%3A5000%2F&scope=bot')
             button.btn.btn-primary.btn-lg 
                 i.fas.fa-plus
