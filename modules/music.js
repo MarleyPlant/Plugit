@@ -17,14 +17,8 @@ function playSong(song, msg) {
   msg.channel.send(
     `Playing: **${song.title}** as requested by: **${song.requestedBy}**`
   );
-  dispatchers[
-    msg.guild.id
-  ] = msg.guild.voiceConnection.playStream(
-    youtube(song.url, { audioonly: true, quality: "lowest" }),
-    { passes: 0 }
-  );
-
-  dispatchers[msg.guild.id].on("end", () => {
+  dispatchers[msg.guild.id].play(youtube(song.url, { audioonly: true, quality: 'lowest' }), { passes : 0 });
+  dispatchers[msg.guild.id].on('end', () => {
     playSong(queue[msg.guild.id].songs.shift(), msg);
   });
 }
@@ -41,12 +35,15 @@ module.exports = {
         return new Promise((resolve, reject) => {
           const voiceChannel = msg.member.voice.channel
 
-          if (!voiceChannel) {
+          if   (!voiceChannel) {
             msg.channel.send("I couldn't connect to your voice channel...");
           } else {
             voiceChannel
               .join()
-              .then((connection) => resolve(connection))
+              .then((connection) => {
+                dispatchers[msg.guild.id] = connection;
+                resolve(connection)
+              })
               .catch((err) => msg.channel.send(err));
             msg.channel.send(
               `Successfully Joined Channel: **${voiceChannel.name}**`
@@ -141,7 +138,7 @@ module.exports = {
           return;
         }
 
-        if (msg.guild.voiceConnection) {
+        if (msg.member.voice.channel) {
           queue[msg.guild.id].playing = true;
           playSong(queue[msg.guild.id].songs.shift(), msg);
         }
