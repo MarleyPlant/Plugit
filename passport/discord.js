@@ -8,7 +8,6 @@ const isEmpty = require('../helpers/isEmpty');
 const client = new Client();
 
 passport.serializeUser((user, done) => {
-    console.log("Serialize");
     done(null, user);
 });
 

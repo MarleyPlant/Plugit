@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var passport = require('passport');
 var session = require('express-session');
+const KnexSessionStore = require('connect-session-knex')(session);
 var knex = require('knex')(require('./knexfile').development);
 var discordStrategy = require('./passport/discord');
 var indexRouter = require('./routes/index');
@@ -13,6 +14,10 @@ var serverRouter = require('./routes/server');
 
 var authRouter = require('./routes/auth');
 
+const store = new KnexSessionStore({
+  knex,
+  tablename: 'sessions',
+});
 
 var app = express();
 
@@ -31,6 +36,7 @@ app.use(session({
   cookie: {
     maxAge: 60000 * 60 * 24
   },
+  store: store,
   saveUninitialized: false
 }));
 

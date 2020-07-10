@@ -11,7 +11,10 @@ router.get('/', isAuth, function(req, res, next) {
 router.get('/:server', function(req, res, next) {
   knex('servers').where({discord_ID: req.params.server}).first()
   .then((server) => {
-    res.render('server', { server: server});
+    res.render('server', { 
+      title: `Pluit - ${server.name}`,
+      server: server
+    });
     })
   .catch((err) => { console.log(err) });
 });

@@ -16,6 +16,7 @@
     "bootstrap": "^4.5.0",
     "breakpoint-sass": "^2.7.1",
     "chalk": "^4.1.0",
+    "connect-session-knex": "^1.7.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "discord.js": "^12.2.0",
