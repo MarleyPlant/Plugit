@@ -27,9 +27,11 @@ function createServer(guild) {
 
 
 client.on("ready", () => {
+  guilds = client.guilds.cache.array()
+
   console.log(`Logged in as ${client.user.tag}!`);
   console.log(
-    `Connected to ${client.guilds.length} guilds, serving ${client.users.size} users.`
+    `Connected to ${guilds.length} guilds, serving ${client.users.size} users.`
   );
   client.user.setActivity(process.env.playing);
 
