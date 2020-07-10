@@ -47,17 +47,18 @@ the basic structure of a plugit module is
 
 
 ```js
+module.exports = {
     name: 'example', //The Name of your command how it should be typed into the discord chat - the prefix.
     parameters: {
-      params: [
-          "(name)",
-          "(role)",
-      ],
-      required: true, //Will the Main Function stil run if no arguments are supplied?
+        params: [
+            "(name)",
+            "(role)",
+        ],
+        required: true, //Will the Main Function stil run if no arguments are supplied?
     },
     help: '', //Text that is shown under the command in the help command.
     main: function(bot, db, msg) //Should be a function that contains the bulk of your code. See below for examples.
-  }
+}
 ```
 Its pretty self explanatory.
 
