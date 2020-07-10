@@ -2,6 +2,7 @@ var chalk = require("chalk");
 var glob = require("glob");
 var path = require("path");
 var archy = require("archy");
+const { exit } = require("process");
 var fs = require("fs").promises;
 
 class PluginManager {
@@ -115,6 +116,9 @@ class PluginManager {
 
     //Load Local Modules
     if (dir) {
+      if(dir == path.join(__dirname, '../', 'modules/', 'commands') || path.join(__dirname, '../', 'modules/', 'events')) {
+        return;
+      }
       var files = await fs.readdir(path.join(dir));
     } else {
       var files = await fs.readdir(path.join(__dirname, '../' ,path.join(this.searchDirectory)));
