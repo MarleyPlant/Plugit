@@ -11,6 +11,7 @@ class PluginManager {
     this.events = {};
     this.searchDirectory = path.join('/modules/' );
     this.plugins = PluginManager.getModules();
+    this.settings = [];
   }
 
   addCommand(command) {
@@ -108,6 +109,11 @@ class PluginManager {
       }
   }
 
+
+  async loadSetting(path) {
+    this.settings = require(path);
+  }
+
   async loadModules(dir='') {
     // //Load NPM Modules
     // for (let plugin of this.plugins) {
@@ -138,6 +144,12 @@ class PluginManager {
           this.loadModule(path.join(dir, file));
         } else {
           this.loadModule(path.join(__dirname, '../' , this.searchDirectory, file));
+        }
+      } else if (file.endsWith("frontend.json")) {
+        if (!dir=='') {
+          this.loadSetting(path.join(dir, file));
+        } else {
+          this.loadSetting(path.join(__dirname, '../' , this.searchDirectory, file));
         }
       }
     }

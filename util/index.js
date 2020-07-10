@@ -1,5 +1,6 @@
 module.exports = {
   args: require('./args'),
   pluginManager: require('./PluginManager'),
-  notifications: require('./notifications')
+  notifications: require('./notifications'),
+  settingsLoader: require('./settingsLoader')
 }

@@ -3,6 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var isAuth = require('../helpers/isAuth');
 const knex = require('knex')(require('../knexfile').development);
+const util = require("../util");
 
 router.get('/', isAuth, function(req, res, next) {
     res.redirect('/');
