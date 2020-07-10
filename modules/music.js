@@ -13,6 +13,14 @@ function playSong(song, msg) {
         queue[msg.guild.id].playing = false;
         return;
       });
+
+  msg.channel.send(
+    `Playing: **${song.title}** as requested by: **${song.requestedBy}**`
+  );
+  dispatchers[msg.guild.id].play(youtube(song.url, { audioonly: true, quality: 'lowest' }), { passes : 0 });
+  dispatchers[msg.guild.id].on('end', () => {
+    playSong(queue[msg.guild.id].songs.shift(), msg);
+  });
 }
 
 function validateYouTubeUrl(url) {
@@ -38,7 +46,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
           const voiceChannel = msg.member.voice.channel;
 
-          if (!voiceChannel) {
+          if   (!voiceChannel) {
             msg.channel.send("I couldn't connect to your voice channel...");
           } else {
             voiceChannel
