@@ -6,7 +6,7 @@ const knex = require("knex")(require("./knexfile").development);
 const util = require("./util");
 
 const client = new Client();
-const pluginManager = new util.pluginManager(__dirname + "/modules/");
+const pluginManager = new util.pluginManager();
 
 function updateServer(guild) {
   knex(tableNames.server)

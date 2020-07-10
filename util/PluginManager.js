@@ -2,13 +2,13 @@ var chalk = require("chalk");
 var glob = require("glob");
 var path = require("path");
 var archy = require("archy");
-var fs = require("fs");
+var fs = require("fs").promises;
 
 class PluginManager {
   constructor(searchDirectory) {
     this.commands = {};
     this.events = {};
-    this.searchDirectory = searchDirectory;
+    this.searchDirectory = path.join('/modules/' );
     this.plugins = PluginManager.getModules();
   }
 
@@ -94,16 +94,10 @@ class PluginManager {
     }, []);
   }
 
-  loadModule(plugin, path) {
-    try {
-      if (plugin.path){
-        var module = require(plugin.path + "/" + plugin.pkg.main);
-      } else {
-        var module = require(path + "/" + plugin);
-      }
-    } catch (e) {
-      console.log(e);
-    } finally {
+  loadModule(path) {
+
+      let module = require(path);
+
       for (let command of Object.keys(module.commands)) {
         this.commands[command] = module.commands[command];
       }
@@ -111,20 +105,36 @@ class PluginManager {
       for (let event of Object.keys(module.events)) {
         this.events[event] = module.commands[event];
       }
-    }
   }
 
-  loadModules() {
-    //Load NPM Modules
-    for (let plugin of this.plugins) {
-      this.loadModule(plugin, plugin.path);
-    }
+  async loadModules(dir='') {
+    // //Load NPM Modules
+    // for (let plugin of this.plugins) {
+    //   this.loadModule(plugin, plugin.path);
+    // }
 
     //Load Local Modules
-    var files = fs.readdirSync(this.searchDirectory);
+    if (dir) {
+      var files = await fs.readdir(path.join(dir));
+    } else {
+      var files = await fs.readdir(path.join(__dirname, '../' ,path.join(this.searchDirectory)));
+    }
+
     for (let file of files) {
-      if (file.endsWith(".js")) {
-        this.loadModule(file, this.searchDirectory);
+      if (dir=='') {
+        var stat = await fs.lstat(path.join(__dirname, '../' , this.searchDirectory, file));
+      } else {
+        var stat = await fs.lstat(path.join(dir, file));
+      }
+
+      if (stat.isDirectory()) {
+        this.loadModules(path.join(__dirname, '../', this.searchDirectory ,file));
+      } else if (file.endsWith(".js")) {
+        if (!dir=='') {
+          this.loadModule(path.join(dir, file));
+        } else {
+          this.loadModule(path.join(__dirname, '../' , this.searchDirectory, file));
+        }
       }
     }
   }
