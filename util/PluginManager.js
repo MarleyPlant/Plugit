@@ -122,10 +122,11 @@ class PluginManager {
 
     //Load Local Modules
     if (dir) {
-      if(dir == path.join(__dirname, '../', 'modules/', 'commands') || path.join(__dirname, '../', 'modules/', 'events')) {
+      if(dir === path.join(__dirname, '../', 'modules/', 'commands') || dir === path.join(__dirname, '../', 'modules/', 'events')) {
         return;
+      } else {
+        var files = await fs.readdir(path.join(dir));
       }
-      var files = await fs.readdir(path.join(dir));
     } else {
       var files = await fs.readdir(path.join(__dirname, '../' ,path.join(this.searchDirectory)));
     }
