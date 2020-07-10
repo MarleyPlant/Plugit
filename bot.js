@@ -113,3 +113,5 @@ client.on('message', (msg) => {
 
 console.log("———————— Plugit! ————————");
 client.login(process.env.TOKEN);
+
+module.exports = client;
