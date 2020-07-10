@@ -1,4 +1,4 @@
-FROM node:8.11-alpine
+foFROM node:8.11-alpine
 
 WORKDIR /usr/src/app
 

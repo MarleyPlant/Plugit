@@ -11,6 +11,7 @@
     "migrate:down": "knex migrate:down"
   },
   "dependencies": {
+    "@discordjs/opus": "^0.3.2",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "archy": "^1.0.0",
     "bootstrap": "^4.5.0",
@@ -22,6 +23,7 @@
     "discord.js": "^12.2.0",
     "express": "~4.16.0",
     "express-session": "^1.17.1",
+    "ffmpeg-static": "^4.2.5",
     "fs": "0.0.1-security",
     "http-errors": "~1.6.2",
     "knex": "^0.21.1",

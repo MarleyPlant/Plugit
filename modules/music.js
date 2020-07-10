@@ -13,40 +13,40 @@ function playSong(song, msg) {
         queue[msg.guild.id].playing = false;
         return;
       });
-
-  msg.channel.send(
-    `Playing: **${song.title}** as requested by: **${song.requestedBy}**`
-  );
-  dispatchers[
-    msg.guild.id
-  ] = msg.guild.voiceConnection.playStream(
-    youtube(song.url, { audioonly: true, quality: "lowest" }),
-    { passes: 0 }
-  );
-
-  dispatchers[msg.guild.id].on("end", () => {
-    playSong(queue[msg.guild.id].songs.shift(), msg);
-  });
 }
 
+function validateYouTubeUrl(url) {
+  if (url != undefined || url != "") {
+    var regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=|\?v=)([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    if (match && match[2].length == 11) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
 module.exports = {
   commands: {
     join: {
       name: "join",
       parameters: {
-        params: '',
-        required: false
+        params: "",
+        required: false,
       },
       main: function (bot, db, msg) {
         return new Promise((resolve, reject) => {
-          const voiceChannel = msg.member.voice.channel
+          const voiceChannel = msg.member.voice.channel;
 
           if (!voiceChannel) {
             msg.channel.send("I couldn't connect to your voice channel...");
           } else {
             voiceChannel
               .join()
-              .then((connection) => resolve(connection))
+              .then((connection) => {
+                dispatchers[msg.guild.id] = connection;
+                resolve(connection);
+              })
               .catch((err) => msg.channel.send(err));
             msg.channel.send(
               `Successfully Joined Channel: **${voiceChannel.name}**`
@@ -60,8 +60,8 @@ module.exports = {
     add: {
       name: "add",
       parameters: {
-        params: '(url)',
-        required: true
+        params: "(url)",
+        required: true,
       },
       help: "Add a song to the queue",
       main: function (bot, db, msg) {
@@ -71,6 +71,11 @@ module.exports = {
         if (url == " " || url == undefined) {
           msg.channel.send("Missing Or Invalid URL!");
           return;
+        }
+
+
+        if (!validateYouTubeUrl(url)) {
+          return msg.channel.send("${msg.author}, The url you provided is Invalid.")
         }
 
         youtube.getInfo(url, (err, info) => {
@@ -98,8 +103,8 @@ module.exports = {
     queue: {
       name: "queue",
       parameters: {
-        params: '',
-        required: false
+        params: "",
+        required: false,
       },
       help: "List current songs in the queue",
       main: function (bot, db, msg) {
@@ -124,8 +129,8 @@ module.exports = {
     play: {
       name: "play",
       parameters: {
-        params: '',
-        required: false
+        params: "",
+        required: false,
       },
       help: "play",
       main: function (bot, db, msg) {
@@ -141,7 +146,7 @@ module.exports = {
           return;
         }
 
-        if (msg.guild.voiceConnection) {
+        if (msg.member.voice.channel) {
           queue[msg.guild.id].playing = true;
           playSong(queue[msg.guild.id].songs.shift(), msg);
         }
@@ -151,8 +156,8 @@ module.exports = {
     skip: {
       name: "skip",
       parameters: {
-        params: '',
-        required: false
+        params: "",
+        required: false,
       },
       help: "Skip to next song in the queue",
       main: function (bot, db, msg) {
@@ -163,8 +168,8 @@ module.exports = {
     stop: {
       name: "stop",
       parameters: {
-        params: '',
-        required: false
+        params: "",
+        required: false,
       },
       help: "Stop Music Functionality",
       main: function (bot, db, msg) {
@@ -175,8 +180,8 @@ module.exports = {
     pause: {
       name: "pause",
       parameters: {
-        params: '',
-        required: false
+        params: "",
+        required: false,
       },
       help: "Pause the current song",
       main: function (bot, db, msg) {
@@ -187,8 +192,8 @@ module.exports = {
     resume: {
       name: "resume",
       parameters: {
-        params: '',
-        required: false
+        params: "",
+        required: false,
       },
       help: "resume playback of song",
       main: function (bot, db, msg) {
@@ -197,7 +202,5 @@ module.exports = {
     },
   },
 
-  events: {
-
-  }
+  events: {},
 };
