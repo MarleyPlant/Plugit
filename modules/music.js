@@ -100,10 +100,10 @@ module.exports = {
 
           queue[msg.guild.id].songs.push({
             url: url,
-            title: info.title,
+            title: info.videoDetails.title,
             requestedBy: msg.author.username,
           });
-          msg.channel.send(`Added **${info.title}** to the queue!`);
+          msg.channel.send(`Added **${info.videoDetails.title}** to the queue!`);
         });
       },
     },

@@ -107,7 +107,7 @@ client.on('message', (msg) => {
       var args = util.args.parse(msg);
       if(command in pluginManager.commands){
         if(process.env.delete_commands == true) msg.delete()
-        if (args.length == 0 && pluginManager.commands[command].parameters.required) {
+        if (!args.length == pluginManager.commands[command].parameters.params.length && pluginManager.commands[command].parameters.params.required) {
           		let reply = `You didn't provide any arguments, ${msg.author}!`;
           
           		if (pluginManager.commands[command].parameters.params) {

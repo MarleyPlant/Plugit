@@ -5,7 +5,7 @@ module.exports = {
     clear: {
       name: "clear",
       parameters: {
-        params: "(number)",
+        params: ["(number)"],
         required: false,
       },
       help: "clear messages from the chat.",
@@ -23,7 +23,7 @@ module.exports = {
       name: "stats",
       help: "Display statistics for the bot instance." ,
       parameters: {
-        params: "",
+        params: [""],
         required: false,
       },
       main: function(bot, db, msg) {
@@ -37,11 +37,11 @@ module.exports = {
       name: "banned",
       help: "Displays A List Of Banned Users.",
       parameters: {
-        params: "(user)",
+        params: ["(user)"],
         required: true,
       },
       main: function(bot, db, msg) {
-
+        msg.channel.send("Display Banned Users");
       }
     }
   },
