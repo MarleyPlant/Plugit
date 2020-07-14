@@ -2,6 +2,19 @@ const util = require("../util");
 
 module.exports = {
   commands: {
+    uptime: {
+      name: "uptime",
+      guildOnly: false,
+      parameters: {
+        params: [],
+        required: false,
+      },
+      help: "Get Bot Uptime",
+      main: function(bot, db, msg) {
+        msg.channel.send(`The Bot Has Been Up For: ${bot.uptime / 1000}seconds.`);
+      },
+    },
+
     clear: {
       name: "clear",
       parameters: {
