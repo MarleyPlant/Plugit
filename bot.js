@@ -4,26 +4,11 @@ const tableNames = require("./constants/tableNames");
 const { Connection } = require("pg");
 const knex = require("knex")(require("./knexfile").development);
 const util = require("./util");
-
+const updateServer = require('./helpers/updateServer');
+const createServer = require('./helpers/createServer');
 const client = new Client();
 const pluginManager = new util.pluginManager();
 
-function updateServer(guild) {
-  knex(tableNames.server)
-    .where({ discord_ID: guild.id })
-    .update({ name: guild.name, memberCount: guild.memberCount, icon: guild.iconURL() }, ['id', 'name', 'memberCount', 'icon'])
-    .catch(function (e) {
-      console.log(e);
-    });
-}
-
-function createServer(guild) {
-  knex(tableNames.server)
-    .insert({ name: guild.name, discord_ID: guild.id, memberCount: guild.memberCount, icon: guild.iconURL() })
-    .catch(function (e) {
-      console.log(e);
-    });
-}
 
 
 client.on("ready", () => {
@@ -84,7 +69,7 @@ pluginManager.addCommand({
 });
 
 client.on("guildCreate", async (guild) => {
-  createServer(guild);
+  createServer(guild, knex);
 });
 
 client.on("guildUpdate", async (guild) => {
@@ -93,10 +78,10 @@ client.on("guildUpdate", async (guild) => {
   .first()
   .then((server) => {
     if(!server) {
-      createServer(guild);
+      createServer(guild, knex);
     }
     else { 
-      updateServer(guild);
+      updateServer(guild, knex);
     }
   })
 });

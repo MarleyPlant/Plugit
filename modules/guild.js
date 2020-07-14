@@ -1,20 +1,5 @@
-function updateServer(db, guild) {
-  db(tableNames.server)
-    .where({ discord_ID: guild.id })
-    .update({ name: guild.name, memberCount: guild.memberCount, icon: guild.iconURL() }, ['id', 'name', 'memberCount', 'icon'])
-    .catch(function (e) {
-      console.log(e);
-    });
-}
-
-function createServer(db, guild) {
-  db(tableNames.server)
-    .insert({ name: guild.name, discord_ID: guild.id, memberCount: guild.memberCount, icon: guild.iconURL() })
-    .catch(function (e) {
-      console.log(e);
-    });
-}
-
+const updateServer = require('../helpers/updateServer');
+const createServer = require('../helpers/createServer');
 const tableNames = require("../constants/tableNames");
 
 module.exports = {
@@ -32,15 +17,26 @@ module.exports = {
               .first()
               .then((server) => {
                 if(!server) {
-                  createServer(db, msg.guild);
+                  createServer(msg.guild, db);
                   msg.channel.send("Created Guild Entry In Database!");
                 }
                 else { 
-                  updateServer(db, msg.guild);
+                  updateServer(msg.guild, db);
                   msg.channel.send("Updated Guild In Database.");
                 }
               })
             }
+        },
+        server: {
+          name: "server",
+          parameters: {
+            params: [],
+            required: false,
+          },
+          help: "Check server information",
+          main: function(bot, db, msg){
+            msg.channel.send(`Server name: ${msg.guild.name}\nTotal members: ${msg.guild.memberCount}`);
+          },
         },
     },
     events : {
