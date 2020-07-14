@@ -41,29 +41,32 @@ passport.use(new DiscordStrategy({
     knex(tableNames.user).where({ discord_ID: profile.id }).first()
     .then((user) => { 
         if(!user) {
-            console.log("Not User")
+            console.log(`Creating user for ${profile.id}`);
             knex(tableNames.user).insert({ discord_ID: profile.id, name: profile.username, guilds: get_guilds(profile) })
             .then((user) => {
-                console.log(user);
-                done(null, user)
+                knex(tableNames.user).where({ id:user[0] }).first().then((user) => {
+                    return done(null, user);
+                }).catch(function(e) {
+                    console.log(`50: ${e}`);
+                    return done(false, e);
+                })
             })
             .catch(function(e) {
                 console.log(e);
+                return done(false,e);
+            });
+        } else {
+            console.log(`User ${user} exists`);
+            knex(tableNames.server)
+            .where({ discord_ID: profile.id })
+            .update({ guilds: get_guilds(profile) }, ['id', 'guilds'])
+            .catch(function(e) {
                 done(false,e);
             });
-
-            knex(tableNames.server)
-                .where({ discord_ID: profile.id })
-                .update({ guilds: get_guilds(profile) }, ['id', 'guilds'])
-                .catch(function(e) {
-                    done(false,e);
-                });
-
-            return done(null, newuser);
+    
+    
+            done(null, user); 
         }
-
-
-        done(null, user); 
     })
     .catch((err) => { console.log(err); });
 }));
