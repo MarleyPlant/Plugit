@@ -1,3 +1,5 @@
+const tableNames = require("../constants/tableNames");
+
 function updateServer(db, guild) {
   db(tableNames.server)
     .where({ discord_ID: guild.id })
@@ -15,12 +17,11 @@ function createServer(db, guild) {
     });
 }
 
-const tableNames = require("../constants/tableNames");
 
 module.exports = {
     commands: {
-        updatedashboard: {
-            name: "updatedashboard",
+        update: {
+            name: "update",
             parameters: {
               params: [],
               required: false,
