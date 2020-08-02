@@ -4,8 +4,8 @@ const tableNames = require("../constants/tableNames");
 
 module.exports = {
     commands: {
-        updatedashboard: {
-            name: "updatedashboard",
+        update: {
+            name: "update",
             parameters: {
               params: [],
               required: false,
