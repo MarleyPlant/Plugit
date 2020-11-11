@@ -4,20 +4,14 @@ var passport = require("passport");
 var isAuth = require("../helpers/isAuth");
 const knex = require("knex")(require("../knexfile").development);
 
-router.get("/update/token/:token", (req, res) => {
+router.post("/update/", (req, res) => {
   // Update Items In Database.
-  var token = req.params.token;
-  knex("settings").first().update({ token: token }).then((data) => {
+  knex("settings").first().update(req.body).then((data) => {
     res.redirect("/settings");
+  }).catch((err) => {
+    console.log(err);
   });
 });
-
-
-var scripts = {
-  update: () => {
-    console.log("UPDATE");
-  }
-};
 
 router.get("/", function (req, res, next) {
   knex("settings")
@@ -26,7 +20,6 @@ router.get("/", function (req, res, next) {
       var token = data["token"];
       var prefix = data["prefix"];
       res.render("settings", {
-        utils: scripts,
         title: "Plugit - Settings",
         token: token,
         prefix: prefix,

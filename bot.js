@@ -114,15 +114,13 @@ client.on("message", (msg) => {
   }
 });
 
-var token = knex
-  .select()
-  .table("settings")
+var token = knex("settings")
   .first()
   .then(async (data) => {
     var token = data["token"];
     var prefix = data["prefix"];
     console.log("———————— Plugit! ————————");
-    console.log(process.env.TOKEN || token)
+    console.log(token);
   });
 
 module.exports = client;
