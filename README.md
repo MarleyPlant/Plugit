@@ -18,6 +18,22 @@ We are using Discord.JS, Express, Postgres and Knex.JS to implement a discord bo
 
 You can add the bot to your server [HERE](https://discord.com/oauth2/authorize?client_id=355715029296742403&scope=bot&permissions=8)
 
+## Setup
+Setting up the bot is easy. First of all clone the repo:
+`git clone git@gitlab.com:MarleyPlant/Plugit`
+
+Create `.env` file and inside add the following configuration options, you can find these on the dicord developer portal.
+```
+CLIENT_ID=''
+CLIENT_SECRET=''
+CLIENT_REDIRECT=''
+TOKEN=''
+SESSION_SECRET=''
+```
+
+Starting the for the first time is as easy as:
+`npm run build && npm start`
+
 ## Creating Your Own Plugins.
 For creating your own modules and plugins Plugit exposes certain classes to you as well as providing some utility functions.
 To get started creating a module go to your modules folder in the plugit root.
