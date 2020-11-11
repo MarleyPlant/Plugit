@@ -120,7 +120,7 @@ var token = knex("settings")
     var token = data["token"];
     var prefix = data["prefix"];
     console.log("———————— Plugit! ————————");
-    console.log(token);
+    client.login(token);
   });
 
 module.exports = client;
