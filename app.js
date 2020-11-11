@@ -1,3 +1,5 @@
+var knex = require('knex')(require('./knexfile').development);
+var knex = require('knex')(require('./knexfile').development);
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -6,7 +8,6 @@ var logger = require('morgan');
 var passport = require('passport');
 var session = require('express-session');
 const KnexSessionStore = require('connect-session-knex')(session);
-var knex = require('knex')(require('./knexfile').development);
 var discordStrategy = require('./passport/discord');
 var indexRouter = require('./routes/index');
 var settingsRouter = require('./routes/settings');

@@ -4,15 +4,13 @@ const tableNames = require("./constants/tableNames");
 const { Connection } = require("pg");
 const knex = require("knex")(require("./knexfile").development);
 const util = require("./util");
-const updateServer = require('./helpers/updateServer');
-const createServer = require('./helpers/createServer');
+const updateServer = require("./helpers/updateServer");
+const createServer = require("./helpers/createServer");
 const client = new Client();
 const pluginManager = new util.pluginManager();
 
-
-
 client.on("ready", () => {
-  guilds = client.guilds.cache.array()
+  guilds = client.guilds.cache.array();
 
   console.log(`Logged in as ${client.user.tag}!`);
   console.log(
@@ -74,46 +72,59 @@ client.on("guildCreate", async (guild) => {
 
 client.on("guildUpdate", async (guild) => {
   knex(tableNames.server)
-  .where({ discord_ID: guild.id })
-  .first()
-  .then((server) => {
-    if(!server) {
-      createServer(guild, knex);
-    }
-    else { 
-      updateServer(guild, knex);
-    }
-  })
+    .where({ discord_ID: guild.id })
+    .first()
+    .then((server) => {
+      if (!server) {
+        createServer(guild, knex);
+      } else {
+        updateServer(guild, knex);
+      }
+    });
 });
 
 //Handle commands
-client.on('message', (msg) => {
-    if ( msg.author.bot ) return //If message is from a bot ignore.
-    if ( msg.content.indexOf(process.env.prefix) !== -1 ) {
-      var command = msg.content.split(process.env.prefix)[1].split(" ")[0];
-      var args = util.args.parse(msg);
-      if(command in pluginManager.commands){
-        if(process.env.delete_commands == true) msg.delete()
-        if (!args.length == pluginManager.commands[command].parameters.params.length && pluginManager.commands[command].parameters.params.required) {
-          		let reply = `You didn't provide any arguments, ${msg.author}!`;
-          
-          		if (pluginManager.commands[command].parameters.params) {
-          			reply += `\nThe proper usage would be: \`${process.env.prefix}${pluginManager.commands[command].name} ${pluginManager.commands[command].parameters.params}\``;
-          		}
-          
-              return msg.channel.send(reply);
-            } else {
-              pluginManager.commands[command].main(client, knex, msg);
-            }
+client.on("message", (msg) => {
+  if (msg.author.bot) return; //If message is from a bot ignore.
+  if (msg.content.indexOf(prefix || process.env.prefix) !== -1) {
+    var command = msg.content.split(process.env.prefix)[1].split(" ")[0];
+    var args = util.args.parse(msg);
+    if (command in pluginManager.commands) {
+      if (process.env.delete_commands == true) msg.delete();
+      if (
+        !args.length ==
+          pluginManager.commands[command].parameters.params.length &&
+        pluginManager.commands[command].parameters.params.required
+      ) {
+        let reply = `You didn't provide any arguments, ${msg.author}!`;
+
+        if (pluginManager.commands[command].parameters.params) {
+          reply += `\nThe proper usage would be: \`${process.env.prefix}${pluginManager.commands[command].name} ${pluginManager.commands[command].parameters.params}\``;
+        }
+
+        return msg.channel.send(reply);
+      } else {
+        pluginManager.commands[command].main(client, knex, msg);
       }
     }
-  
-    if (pluginManager.events["message"]) {
-      pluginManager.events["message"].main(client, knex, msg)
-    }
-});  
+  }
 
-console.log("———————— Plugit! ————————");
-client.login(process.env.TOKEN);
+  if (pluginManager.events["message"]) {
+    pluginManager.events["message"].main(client, knex, msg);
+  }
+});
+
+var token = knex
+  .select()
+  .table("settings")
+  .first()
+  .then(async (data) => {
+    var token = data["token"];
+    var prefix = data["prefix"];
+    console.log("———————— Plugit! ————————");
+    console.log(`TOKEN ${token}`);
+
+    client.login(token || process.env.TOKEN);
+  });
 
 module.exports = client;
