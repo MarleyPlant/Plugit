@@ -1,7 +1,8 @@
 extends layout
-
 block content
   main#dashboard.settings
+    script(type='text/javascript' src='https://code.jquery.com/jquery-3.5.1.min.js')
+    script(type='text/javascript' src='/js/settings.js')
     include includes/navbar
     #content.content.container
       .col
@@ -28,15 +29,20 @@ block content
           .div.input-group.mb-3
             .div.input-group-prepend
               span.input-group-text Command Prefix
-            .input(type='text').form-control !
-            .div.input-group-append
-              span.input-group-text "Example Command From Bot."
+            input(type='text' value=prefix).form-control#prefix
           .div.input-group.mb-3
             .div.input-group-prepend
               span.input-group-text User Welcome Message
-            .input(type='text').form-control 
+            input(type='text').form-control#message
+
+          .div.input-group.mb-3
+            .div.input-group-prepend
+              span.input-group-text Token
+            input(type='text' value=token).form-control#token
+
+
           .btn-group
-            button.btn.btn-large.btn-success Start
+            button.btn.btn-large.btn-success Save
             button.btn.btn-large.btn-danger Stop
 
 

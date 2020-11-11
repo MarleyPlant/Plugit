@@ -19,7 +19,7 @@ You can add the bot to your server [HERE](https://discord.com/oauth2/authorize?c
 Setting up the bot is easy. First of all clone the repo:
 `git clone git@gitlab.com:MarleyPlant/Plugit`
 
-Create `.env` file and inside add the following configuration options, you can find these on the dicord developer portal.
+Create `.env` file and inside add the following configuration options, you can find these on the [dicord developer portal](https://discord.com/developers/applications).
 ```
 CLIENT_ID=''
 CLIENT_SECRET=''
