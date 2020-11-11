@@ -4,6 +4,3 @@
 [submodule "scss/variable/mixins/scss-mum"]
 	path = scss/variable/mixins/scss-mum
 	url = ../../marleyplant/scss-mum
-[submodule "modules/Plugit-Overwatch"]
-	path = modules/Plugit-Overwatch
-	url = ../../PlugitDev/Plugit-Overwatch
