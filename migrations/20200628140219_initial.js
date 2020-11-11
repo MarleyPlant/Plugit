@@ -38,4 +38,5 @@ exports.down = async (knex) => {
   await knex.schema.dropTable(tableNames.user);
   await knex.schema.dropTable(tableNames.server);
   await knex.schema.dropTable('sessions');
+  await knex.schema.dropTable("settings");
 };

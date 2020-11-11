@@ -23,13 +23,13 @@ Create `.env` file and inside add the following configuration options, you can f
 ```
 CLIENT_ID=''
 CLIENT_SECRET=''
-CLIENT_REDIRECT=''
-TOKEN=''
 SESSION_SECRET=''
 ```
 
 Starting the for the first time is as easy as:
 `npm run build && npm start`
+
+after this you must sign in on the web interface at [http://localhost:5000]().
 
 ## Creating Your Own Plugins.
 For creating your own modules and plugins Plugit exposes certain classes to you as well as providing some utility functions.

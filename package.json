@@ -7,7 +7,7 @@
     "bot": "node bot.js",
     "test": "mocha",
     "build": "gulp",
-    "migrate": "knex migrate:latest",
+    "migrate": "knex migrate:latest && knex seed:run",
     "migrate:down": "knex migrate:down"
   },
   "dependencies": {

@@ -8,6 +8,8 @@ const updateServer = require("./helpers/updateServer");
 const createServer = require("./helpers/createServer");
 const client = new Client();
 const pluginManager = new util.pluginManager();
+let prefix;
+let token;
 
 client.on("ready", () => {
   guilds = client.guilds.cache.array();
@@ -47,7 +49,7 @@ pluginManager.addCommand({
     for (command in pluginManager.commands) {
       if (pluginManager.commands[command].parameters) {
         embed.addField(
-          process.env.prefix +
+          prefix +
             pluginManager.commands[command].name +
             " " +
             pluginManager.commands[command].parameters.params,
@@ -56,7 +58,7 @@ pluginManager.addCommand({
         );
       } else {
         embed.addField(
-          process.env.prefix + pluginManager.commands[command].name,
+          prefix + pluginManager.commands[command].name,
           pluginManager.commands[command].help,
           true
         );
@@ -86,8 +88,8 @@ client.on("guildUpdate", async (guild) => {
 //Handle commands
 client.on("message", (msg) => {
   if (msg.author.bot) return; //If message is from a bot ignore.
-  if (msg.content.indexOf(prefix || process.env.prefix) !== -1) {
-    var command = msg.content.split(process.env.prefix)[1].split(" ")[0];
+  if (msg.content.indexOf(prefix) !== -1) {
+    var command = msg.content.split(prefix)[1].split(" ")[0];
     var args = util.args.parse(msg);
     if (command in pluginManager.commands) {
       if (process.env.delete_commands == true) msg.delete();
@@ -99,7 +101,7 @@ client.on("message", (msg) => {
         let reply = `You didn't provide any arguments, ${msg.author}!`;
 
         if (pluginManager.commands[command].parameters.params) {
-          reply += `\nThe proper usage would be: \`${process.env.prefix}${pluginManager.commands[command].name} ${pluginManager.commands[command].parameters.params}\``;
+          reply += `\nThe proper usage would be: \`${prefix}${pluginManager.commands[command].name} ${pluginManager.commands[command].parameters.params}\``;
         }
 
         return msg.channel.send(reply);
@@ -114,11 +116,11 @@ client.on("message", (msg) => {
   }
 });
 
-var token = knex("settings")
+knex("settings")
   .first()
   .then(async (data) => {
-    var token = data["token"];
-    var prefix = data["prefix"];
+    token = data["token"];
+    prefix = data["prefix"];
     console.log("———————— Plugit! ————————");
     client.login(token);
   });
