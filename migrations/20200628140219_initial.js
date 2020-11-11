@@ -17,8 +17,10 @@ exports.up = async (knex) => {
 
   await knex.schema.createTable("settings", (table) => {
     table.increments().notNullable();
-    table.text('token').notNullable();
-    table.text('prefix').notNullable();
+    table.text('token');
+    table.text('prefix');
+    table.text('clientid');
+    table.text('clientsecret');
   })
 
   await knex.schema.createTable(tableNames.server, (table) => {

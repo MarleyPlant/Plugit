@@ -5,18 +5,10 @@ $(function () {
     const data = {
         prefix: $("#prefix").val(),
         token: $("#token").val(),
+        clientid: $("#client_id").val(),
+        clientsecret: $('#client_secret').val()
     };
-
-    if (data['prefix'] !== defaults[0]) {
-      console.log("Set Prefix Too", data['prefix']);
-    }
-    if (data['token'] !== defaults[1]) {
-      console.log("Set Token Too", data['token'])
-    }
-    if (data['message'] !== defaults[2]) {
-      console.log("Set Message Too", data['message']);
-    }
-
+    
     var xhr = new XMLHttpRequest();
     xhr.open("POST", 'http://localhost:5000/settings/update/', true);
     xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");

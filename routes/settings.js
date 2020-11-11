@@ -19,10 +19,15 @@ router.get("/", function (req, res, next) {
     .then(async (data) => {
       var token = data["token"];
       var prefix = data["prefix"];
+      var clientid = data['clientid'];
+      var clientsecret = data['clientsecret'];
+
       res.render("settings", {
         title: "Plugit - Settings",
         token: token,
         prefix: prefix,
+        clientid: clientid,
+        clientsecret: clientsecret,
         settings: [
           {
             id: 1,
