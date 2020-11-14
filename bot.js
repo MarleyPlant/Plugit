@@ -1,4 +1,3 @@
-require("dotenv").config();
 const { MessageEmbed, Client } = require("discord.js");
 const tableNames = require("./constants/tableNames");
 const { Connection } = require("pg");
@@ -12,8 +11,28 @@ const doesCommandRequireParams = require('./helpers/doesCommandRequireParams');
 const getProperUsageText = require('./helpers/getProperUsageText');
 const client = new Client();
 const pluginManager = new util.pluginManager();
+require("dotenv").config();
 let prefix;
 let token;
+
+function addHelpFieldToEmbed(embed, command) {
+  embed.addField(
+    prefix +
+      pluginManager.commands[command].name +
+      " " +
+      pluginManager.commands[command].parameters.params,
+    pluginManager.commands[command].help,
+    true
+  );
+}
+
+function addHelpFieldNoParams(embed, command) {
+  embed.addField(
+    prefix + pluginManager.commands[command].name,
+    pluginManager.commands[command].help,
+    true
+  );
+}
 
 client.on("ready", () => {
   guilds = client.guilds.cache.array();
@@ -39,25 +58,6 @@ client.on("ready", () => {
     });
   }
 });
-
-function addHelpFieldToEmbed(embed, command) {
-  embed.addField(
-    prefix +
-      pluginManager.commands[command].name +
-      " " +
-      pluginManager.commands[command].parameters.params,
-    pluginManager.commands[command].help,
-    true
-  );
-}
-
-function addHelpFieldNoParams(embed, command) {
-  embed.addField(
-    prefix + pluginManager.commands[command].name,
-    pluginManager.commands[command].help,
-    true
-  );
-}
 
 //Help Command
 pluginManager.addCommand({
