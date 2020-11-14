@@ -15,7 +15,7 @@ exports.up = async (knex) => {
     addDefaultColumns(table);
   });
 
-  await knex.schema.createTable("settings", (table) => {
+  await knex.schema.createTable(tableNames.settings, (table) => {
     table.increments().notNullable();
     table.text('token');
     table.text('prefix');
@@ -38,5 +38,5 @@ exports.down = async (knex) => {
   await knex.schema.dropTable(tableNames.user);
   await knex.schema.dropTable(tableNames.server);
   await knex.schema.dropTable('sessions');
-  await knex.schema.dropTable("settings");
+  await knex.schema.dropTable(tableNames.settings);
 };
