@@ -26,20 +26,21 @@ block content
             i.fas.fa-cog
             span  General Settings
           br
-          .div.input-group.mb-3
-            .div.input-group-prepend
-              span.input-group-text Command Prefix
-            input(type='text' value=prefix).form-control#prefix
 
           .div.input-group.mb-3
             .div.input-group-prepend
               span.input-group-text Client ID
-            input(type='text' value=clientid).form-control#client_id
+            input(type='text' value=clientid readonly).form-control#client_id
 
           .div.input-group.mb-3
             .div.input-group-prepend
               span.input-group-text Client Secret
-            input(type='password' value=clientsecret).form-control#client_secret
+            input(type='password' value=clientsecret readonly).form-control#client_secret
+
+          .div.input-group.mb-3
+            .div.input-group-prepend
+              span.input-group-text Command Prefix
+            input(type='text' value=prefix).form-control#prefix
 
           .div.input-group.mb-3
             .div.input-group-prepend

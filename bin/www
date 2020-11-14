@@ -9,7 +9,6 @@ var http = require('http');
 var bot = require('../bot');
 var app = require('../app');
 
-
 /**
  * Get port from environment and store in Express.
  */

@@ -13,6 +13,20 @@ router.post("/update/", (req, res) => {
   });
 });
 
+router.get('/restart', function (req,res,next) {
+  console.log("This is pid " + process.pid);
+  setTimeout(function () {
+      process.on("exit", function () {
+          require("child_process").spawn(process.argv.shift(), process.argv, {
+              cwd: process.cwd(),
+              detached : true,
+              stdio: "inherit"
+          });
+      });
+      process.exit();
+  }, 5000);
+});
+
 router.get("/", function (req, res, next) {
   knex("settings")
     .first()
@@ -20,7 +34,7 @@ router.get("/", function (req, res, next) {
       var token = data["token"];
       var prefix = data["prefix"];
       var clientid = data['clientid'];
-      var clientsecret = data['clientsecret'];
+      var clientsecret = data['clientsecret'] || process.env.CLIENT_SECRET;
 
       res.render("settings", {
         title: "Plugit - Settings",

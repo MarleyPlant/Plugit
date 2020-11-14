@@ -9,7 +9,7 @@ exports.seed = function (knex) {
           id: 1,
           token: "",
           prefix: "!",
-          clientid: "175212409546473474",
+          clientid: "",
           clientsecret: "",
         },
       ]);

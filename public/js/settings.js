@@ -5,8 +5,6 @@ $(function () {
     const data = {
         prefix: $("#prefix").val(),
         token: $("#token").val(),
-        clientid: $("#client_id").val(),
-        clientsecret: $('#client_secret').val()
     };
     
     var xhr = new XMLHttpRequest();

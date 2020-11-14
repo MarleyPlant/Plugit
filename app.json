@@ -1,0 +1,41 @@
+{
+  "name": "Plugit",
+  "description": "Plugit Is a modular Javascript Discord Bot!!",
+  "keywords": ["discord", "javascript"],
+  "website": "https://gitlab.com/plugitdev/",
+  "repository": "https://gitlab.com/plugitdev/",
+  "logo": "https://gitlab.com/plugitdev/plugit/-/raw/master/public/logo.png",
+  "success_url": "/",
+  "scripts": {
+    "postdeploy": "npm run build && npm run migrate"
+  },
+  "env": {
+    "CLIENT_ID": {
+      "description": "Dicord Client ID",
+      "generator": "secret"
+    },
+    "CLIENT_SECRET": {
+      "description": "Discord Client Secret"
+    },
+    "SESSION_SECRET": {
+      "description": "Web Secret for express sessions",
+      "value": "5"
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "standard-1x"
+    }
+  },
+  "image": "heroku/nodejs",
+  "addons": [],
+  "buildpacks": [],
+  "environments": {
+    "test": {
+      "scripts": {
+        "test": "bundle exec rake test"
+      }
+    }
+  }
+}
