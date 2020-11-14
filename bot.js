@@ -7,6 +7,9 @@ const util = require("./util");
 const updateServer = require("./helpers/updateServer");
 const createServer = require("./helpers/createServer");
 const getSettings = require("./helpers/getSettings");
+const getGuild = require("./helpers/getGuild");
+const doesCommandRequireParams = require('./helpers/doesCommandRequireParams');
+const getProperUsageText = require('./helpers/getProperUsageText');
 const client = new Client();
 const pluginManager = new util.pluginManager();
 let prefix;
@@ -37,6 +40,25 @@ client.on("ready", () => {
   }
 });
 
+function addHelpFieldToEmbed(embed, command) {
+  embed.addField(
+    prefix +
+      pluginManager.commands[command].name +
+      " " +
+      pluginManager.commands[command].parameters.params,
+    pluginManager.commands[command].help,
+    true
+  );
+}
+
+function addHelpFieldNoParams(embed, command) {
+  embed.addField(
+    prefix + pluginManager.commands[command].name,
+    pluginManager.commands[command].help,
+    true
+  );
+}
+
 //Help Command
 pluginManager.addCommand({
   name: "help",
@@ -49,20 +71,9 @@ pluginManager.addCommand({
     embed = new MessageEmbed().setTitle("Bot commands");
     for (command in pluginManager.commands) {
       if (pluginManager.commands[command].parameters) {
-        embed.addField(
-          prefix +
-            pluginManager.commands[command].name +
-            " " +
-            pluginManager.commands[command].parameters.params,
-          pluginManager.commands[command].help,
-          true
-        );
+        addHelpFieldToEmbed(embed, command);
       } else {
-        embed.addField(
-          prefix + pluginManager.commands[command].name,
-          pluginManager.commands[command].help,
-          true
-        );
+        addHelpFieldNoParams(embed, command);
       }
     }
     msg.channel.send({ embed });
@@ -74,35 +85,30 @@ client.on("guildCreate", async (guild) => {
 });
 
 client.on("guildUpdate", async (guild) => {
-  knex(tableNames.server)
-    .where({ discord_ID: guild.id })
-    .first()
-    .then((server) => {
-      if (!server) {
-        createServer(guild, knex);
-      } else {
-        updateServer(guild, knex);
-      }
-    });
+  getGuild((server) => {
+    if (!server) {
+      createServer(guild, knex);
+    } else {
+      updateServer(guild, knex);
+    }
+  });
 });
 
 //Handle commands
 client.on("message", (msg) => {
   if (msg.author.bot) return; //If message is from a bot ignore.
   if (msg.content.indexOf(prefix) !== -1) {
-    var command = msg.content.split(prefix)[1].split(" ")[0];
-    var args = util.args.parse(msg);
+    var parsed = util.args.parse(msg, prefix);
+    var command = parsed.command;
+    var args = parsed.args;
+
     if (command in pluginManager.commands) {
       if (process.env.delete_commands == true) msg.delete();
-      if (
-        !args.length ==
-          pluginManager.commands[command].parameters.params.length &&
-        pluginManager.commands[command].parameters.params.required
-      ) {
+      if (doesCommandRequireParams(command, args, pluginManager)) {
         let reply = `You didn't provide any arguments, ${msg.author}!`;
 
         if (pluginManager.commands[command].parameters.params) {
-          reply += `\nThe proper usage would be: \`${prefix}${pluginManager.commands[command].name} ${pluginManager.commands[command].parameters.params}\``;
+          reply += getProperUsageText(prefix, command, pluginManager);
         }
 
         return msg.channel.send(reply);
