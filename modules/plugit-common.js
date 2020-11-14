@@ -10,8 +10,10 @@ module.exports = {
         required: false,
       },
       help: "Get Bot Uptime",
-      main: function(bot, db, msg) {
-        msg.channel.send(`The Bot Has Been Up For: ${bot.uptime / 1000}seconds.`);
+      main: function (bot, db, msg) {
+        msg.channel.send(
+          `The Bot Has Been Up For: ${bot.uptime / 1000}seconds.`
+        );
       },
     },
 
@@ -22,29 +24,35 @@ module.exports = {
         required: false,
       },
       help: "clear messages from the chat.",
-      main: function(bot, db, msg) {
+      main: function (bot, db, msg) {
         args = util.args.parse(msg);
-        if(args[0] == null) {
-          msg.channel.bulkDelete(10);
+        if (args[0] == null) {
+          msg.channel.bulkDelete(10).catch((err) => {
+            msg.reply(err.toString());
+          });
         } else {
-          msg.channel.bulkDelete(args[0]);
+          msg.channel.bulkDelete(10).catch((err) => {
+            msg.reply(err.toString());
+          });
         }
-      }
+      },
     },
 
     stats: {
       name: "stats",
-      help: "Display statistics for the bot instance." ,
+      help: "Display statistics for the bot instance.",
       parameters: {
         params: [""],
         required: false,
       },
-      main: function(bot, db, msg) {
-        guilds = bot.guilds.cache.array()
+      main: function (bot, db, msg) {
+        guilds = bot.guilds.cache.array();
 
-        msg.channel.send(`I am currently connected to and serving ${guilds.length} guilds`)
-      }
-    },  
+        msg.channel.send(
+          `I am currently connected to and serving ${guilds.length} guilds`
+        );
+      },
+    },
 
     banned: {
       name: "banned",
@@ -53,12 +61,11 @@ module.exports = {
         params: ["(user)"],
         required: true,
       },
-      main: function(bot, db, msg) {
+      main: function (bot, db, msg) {
         msg.channel.send("Display Banned Users");
-      }
-    }
+      },
+    },
   },
 
-  events: {
-  }
+  events: {},
 };
