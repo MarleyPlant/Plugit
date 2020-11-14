@@ -6,6 +6,7 @@ const knex = require("knex")(require("./knexfile").development);
 const util = require("./util");
 const updateServer = require("./helpers/updateServer");
 const createServer = require("./helpers/createServer");
+const getSettings = require("./helpers/getSettings");
 const client = new Client();
 const pluginManager = new util.pluginManager();
 let prefix;
@@ -116,13 +117,11 @@ client.on("message", (msg) => {
   }
 });
 
-knex("settings")
-  .first()
-  .then(async (data) => {
-    token = data["token"];
-    prefix = data["prefix"];
-    console.log("———————— Plugit! ————————");
-    client.login(token);
-  });
+getSettings(async (data) => {
+  token = data["token"];
+  prefix = data["prefix"];
+  console.log("———————— Plugit! ————————");
+  client.login(token);
+});
 
 module.exports = client;
