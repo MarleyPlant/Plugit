@@ -12,14 +12,15 @@
   "env": {
     "CLIENT_ID": {
       "description": "Dicord Client ID",
-      "generator": "secret"
+      "value": ""
     },
     "CLIENT_SECRET": {
-      "description": "Discord Client Secret"
+      "description": "Discord Client Secret",
+      "value": ""
     },
     "SESSION_SECRET": {
       "description": "Web Secret for express sessions",
-      "value": "5"
+      "generator": "secret"
     }
   },
   "formation": {
