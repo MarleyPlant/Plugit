@@ -31,7 +31,7 @@
     "passport": "^0.4.1",
     "passport-discord": "^0.1.4",
     "pg": "^8.2.1",
-    "pug": "2.0.0-beta11",
+    "pug": "3.0.1",
     "ytdl-core": "^3.1.2"
   },
   "devDependencies": {
